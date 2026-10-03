@@ -1,0 +1,21 @@
+{
+  "required_nodes": [
+    {
+      "id": "employee"
+    },
+    {
+      "id": "team"
+    }
+  ],
+  "required_relations": [
+    {
+      "kind": "association",
+      "source": "employee",
+      "target": "team",
+      "source_role": "members",
+      "source_multiplicity": "0..*",
+      "target_role": "team",
+      "target_multiplicity": "1"
+    }
+  ]
+}

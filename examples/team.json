@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "id": "employee",
+      "name": "Employee 员工",
+      "kind": "class",
+      "members": [
+        "-name : String",
+        "+assign() : void"
+      ]
+    },
+    {
+      "id": "team",
+      "name": "Team 团队",
+      "kind": "class",
+      "members": [
+        "-name : String"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "kind": "association",
+      "source": "employee",
+      "target": "team",
+      "source_role": "members",
+      "source_multiplicity": "0..*",
+      "target_role": "team",
+      "target_multiplicity": "1"
+    }
+  ]
+}

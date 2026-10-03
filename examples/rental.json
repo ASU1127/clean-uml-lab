@@ -1,0 +1,211 @@
+{
+  "nodes": [
+    {
+      "id": "rental",
+      "name": "租赁 Rental",
+      "members": [
+        "-dueAt : Date",
+        "+returnItems() : void"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "customer",
+      "name": "客户 Customer",
+      "members": [
+        "-name : String"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "line",
+      "name": "租赁项 RentalLine",
+      "members": [
+        "-quantity : int"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "item",
+      "name": "Item",
+      "members": [
+        "-serialNo : String"
+      ],
+      "kind": "abstract"
+    },
+    {
+      "id": "camera",
+      "name": "Camera",
+      "members": [
+        "-sensor : String"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "lens",
+      "name": "Lens",
+      "members": [
+        "-focalLength : int"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "kit",
+      "name": "Kit",
+      "members": [
+        "-name : String"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "payment",
+      "name": "Payment",
+      "members": [
+        "-amount : Money"
+      ],
+      "kind": "abstract"
+    },
+    {
+      "id": "card",
+      "name": "CardPayment",
+      "members": [
+        "-transactionId : String"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "cash",
+      "name": "CashPayment",
+      "members": [
+        "-received : Money"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "receipt",
+      "name": "收据 Receipt",
+      "members": [
+        "-number : String"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "insurance",
+      "name": "保险 Insurance",
+      "members": [
+        "-policyNo : String"
+      ],
+      "kind": "class"
+    },
+    {
+      "id": "clerk",
+      "name": "RentalService",
+      "members": [
+        "+open(customerId : String) : Rental"
+      ],
+      "kind": "class"
+    }
+  ],
+  "relations": [
+    {
+      "source": "rental",
+      "target": "customer",
+      "kind": "association",
+      "source_role": "客户租赁",
+      "target_role": "承租客户",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "1"
+    },
+    {
+      "source": "rental",
+      "target": "line",
+      "kind": "composition",
+      "source_role": "所属租赁",
+      "target_role": "租赁明细",
+      "source_multiplicity": "1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "source": "rental",
+      "target": "insurance",
+      "kind": "association",
+      "source_role": "保障租赁",
+      "target_role": "可选保险",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..1"
+    },
+    {
+      "source": "rental",
+      "target": "payment",
+      "kind": "association",
+      "source_role": "支付租赁",
+      "target_role": "支付记录",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "source": "line",
+      "target": "item",
+      "kind": "association",
+      "source_role": "租出明细",
+      "target_role": "租赁物品",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "1"
+    },
+    {
+      "source": "camera",
+      "target": "item",
+      "kind": "generalization"
+    },
+    {
+      "source": "lens",
+      "target": "item",
+      "kind": "generalization"
+    },
+    {
+      "source": "kit",
+      "target": "item",
+      "kind": "generalization"
+    },
+    {
+      "source": "card",
+      "target": "payment",
+      "kind": "generalization"
+    },
+    {
+      "source": "cash",
+      "target": "payment",
+      "kind": "generalization"
+    },
+    {
+      "source": "payment",
+      "target": "receipt",
+      "kind": "composition",
+      "source_role": "对应支付",
+      "target_role": "支付收据",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..1"
+    },
+    {
+      "source": "kit",
+      "target": "item",
+      "kind": "aggregation",
+      "source_role": "所属套装",
+      "target_role": "套装物品",
+      "source_multiplicity": "0..1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "source": "clerk",
+      "target": "rental",
+      "kind": "dependency",
+      "label": "办理租赁"
+    },
+    {
+      "source": "clerk",
+      "target": "payment",
+      "kind": "dependency",
+      "label": "登记支付"
+    }
+  ]
+}

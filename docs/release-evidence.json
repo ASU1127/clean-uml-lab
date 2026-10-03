@@ -1,0 +1,88 @@
+{
+  "release": "v0.1.0-alpha.1",
+  "internal_stage": "4.2-stage.1",
+  "status": "usable_class_diagram_alpha",
+  "core_files": 57,
+  "core_archive_sha256": "3ec3dc6a79656be40e6d974762ed8b952dff2fb5580242a6b7f9c61fb1ffc4eb",
+  "source_layout": {
+    "cases": 4,
+    "first_passes": 3,
+    "after_one_selection_fix": 4,
+    "known_development_data": true,
+    "new_unseen_test": false,
+    "explicit_declaration_projections": "4/4",
+    "native_CD4Analysis_compiler_semantics_validated": false,
+    "redistribution": "Some research inputs are omitted because their redistribution licenses have not been established."
+  },
+  "package_smoke": [
+    {
+      "case": "Bank",
+      "classifiers": 2,
+      "relations": 1,
+      "seconds": 1.4375053,
+      "layout_calls": 3
+    },
+    {
+      "case": "University",
+      "classifiers": 9,
+      "relations": 10,
+      "seconds": 3.1724117,
+      "layout_calls": 3
+    },
+    {
+      "case": "SocNet",
+      "classifiers": 10,
+      "relations": 15,
+      "seconds": 6.4568691,
+      "layout_calls": 4
+    }
+  ],
+  "package_timing_scope": "One smoke run per case on Windows. Includes candidate generation, SVG/PNG/draw.io and audits; not a repeated speed benchmark.",
+  "ablations": [
+    {
+      "change": "Select a passing candidate before geometry when baseline is invalid",
+      "fixed_candidates": true,
+      "before": "3/4 pass",
+      "after": "4/4 pass",
+      "extra_layout_calls_in_replay": 0,
+      "tradeoff": "University area increased from 813403 to 934648; bends decreased from 6 to 2."
+    },
+    {
+      "change": "Include qualifier rectangles in joint-label clearance",
+      "fixed_facts_and_route_geometry": true,
+      "authored_Bank_collisions_before": 1,
+      "authored_Bank_collisions_after": 0,
+      "SocNet_collisions_before": 0,
+      "SocNet_collisions_after": 0,
+      "extra_layout_calls": 0
+    }
+  ],
+  "native_edit_proof": {
+    "drawio_version": "30.0.4",
+    "cases": 2,
+    "checks": 28,
+    "passed": true,
+    "scope": "Graph/mxCodec model API move, label edit, encode and reload in an isolated software test runtime. No full desktop GUI or pointer-interaction certification."
+  },
+  "competitors": {
+    "same_fact_InviDas": "32 classifiers / 93 members / 27 relations",
+    "controls": [
+      "Mermaid 12.1.0 / CLI 12.0.0 default",
+      "PlantUML 1.2026.6 default"
+    ],
+    "runs_per_control": 1,
+    "reused_identical_4_1_output": true,
+    "new_competitor_runs_for_4_2": 0,
+    "earlier_drawio_skill_trial": "Sequential, same-agent trial; not blind.",
+    "all_competitor_superiority_proven": false,
+    "cross_renderer_speed_comparable": false
+  },
+  "limits": [
+    "Class diagram subset only",
+    "Complex diagrams can retain crossings",
+    "Geometry gates do not establish human aesthetic preference",
+    "No synchronization from edited draw.io back to JSON",
+    "Longer edited text can overflow fixed boxes; regenerate from changed JSON",
+    "Local gallery verified offline, not by browser rendering"
+  ]
+}

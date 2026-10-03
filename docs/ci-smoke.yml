@@ -1,0 +1,57 @@
+name: Class diagram smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install pinned local runtime
+        run: npm install --prefix runtime --no-audit --no-fund
+      - name: Check text measurement and layout dependencies
+        run: python runtime/scripts/doctor.py
+      - name: Verify semantics and qualifier notation
+        run: python verify_semantics.py out/semantic-probes
+      - name: Generate requirement-checked diagram
+        run: python prototype.py examples/team.json --requirements examples/team.requirements.json -o out/team
+      - name: Generate qualified association
+        run: python prototype.py examples/qualified-bank.json --root Bank -o out/bank
+      - name: Check editable exports
+        shell: python
+        run: |
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path('runtime/scripts').resolve()))
+          from check_exports import verify
+          for name, model in [('team', 'team'), ('bank', 'qualified-bank')]:
+              folder = Path('out') / name
+              result = json.loads((folder / 'run.json').read_text(encoding='utf-8'))
+              assert result['selected_valid'], result
+              facts = json.loads((Path('examples') / (model + '.json')).read_text(encoding='utf-8'))
+              print(verify(folder / 'diagram.drawio', facts))
+              for suffix in ('svg', 'png', 'drawio'):
+                  assert (folder / ('diagram.' + suffix)).stat().st_size > 0

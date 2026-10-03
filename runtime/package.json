@@ -1,0 +1,14 @@
+{
+  "name": "clean-uml-runtime",
+  "version": "2.2.0-rc.3",
+  "private": true,
+  "description": "Local deterministic class diagram rendering dependencies",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "elkjs": "0.9.3",
+    "sharp": "0.35.4"
+  }
+}

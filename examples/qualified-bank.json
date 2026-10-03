@@ -1,0 +1,10 @@
+{
+  "package":["bank.core"],
+  "nodes":[
+    {"id":"Bank","name":"Bank","kind":"class","visibility":"public","members":["+name : String"]},
+    {"id":"Person","name":"Person","kind":"class","package":["bank.customers"],"members":["+fullName : String"]}
+  ],
+  "relations":[
+    {"kind":"association","source":"Bank","target":"Person","source_qualifier":{"kind":"attribute","name":"accountNo"},"source_multiplicity":"*","target_multiplicity":"0..1","target_role":"accountHolder","navigability":"->"}
+  ]
+}

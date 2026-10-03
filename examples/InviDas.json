@@ -1,0 +1,494 @@
+{
+  "nodes": [
+    {
+      "id": "PrivacyPolicy",
+      "name": "PrivacyPolicy",
+      "kind": "class",
+      "members": [
+        "name : String",
+        "dateOfCreation : ZonedDateTime",
+        "dateOfLastChange : ZonedDateTime",
+        "effectiveDate : ZonedDateTime",
+        "minUserAge : int",
+        "version : String",
+        "url : String",
+        "fullText : String",
+        "updatePolicies : String"
+      ]
+    },
+    {
+      "id": "Region",
+      "name": "Region",
+      "kind": "class",
+      "members": [
+        "name : String"
+      ]
+    },
+    {
+      "id": "DataProtectionOfficer",
+      "name": "DataProtectionOfficer",
+      "kind": "class",
+      "members": [
+        "name : String",
+        "location : String"
+      ]
+    },
+    {
+      "id": "Controller",
+      "name": "Controller",
+      "kind": "class",
+      "members": [
+        "name : String",
+        "location : String"
+      ]
+    },
+    {
+      "id": "RepresentativePerson",
+      "name": "RepresentativePerson",
+      "kind": "class",
+      "members": [
+        "name : String"
+      ]
+    },
+    {
+      "id": "Contact",
+      "name": "Contact",
+      "kind": "class",
+      "members": [
+        "postalAddress : String",
+        "electAddress : List<String>"
+      ]
+    },
+    {
+      "id": "Law",
+      "name": "Law",
+      "kind": "class",
+      "members": [
+        "lawType : List<LawType>",
+        "text : String",
+        "description : String"
+      ]
+    },
+    {
+      "id": "Right",
+      "name": "Right",
+      "kind": "class",
+      "members": [
+        "contact : List<String>",
+        "description : String"
+      ]
+    },
+    {
+      "id": "RightToComplaint",
+      "name": "RightToComplaint",
+      "kind": "class",
+      "members": [
+        "supervisoryAuthorityContact : Optional<String>"
+      ]
+    },
+    {
+      "id": "DataProcessing",
+      "name": "DataProcessing",
+      "kind": "class",
+      "members": [
+        "actor : Actor",
+        "location : List<Location>",
+        "scenario : String",
+        "description : String"
+      ]
+    },
+    {
+      "id": "Purpose",
+      "name": "Purpose",
+      "kind": "class",
+      "members": [
+        "description : String",
+        "formOfAgreement : FormOfAgreement",
+        "revocationOptions : List<String>"
+      ]
+    },
+    {
+      "id": "LegalBasis",
+      "name": "LegalBasis",
+      "kind": "class",
+      "members": [
+        "legalBasisType : LegalBasisType",
+        "description : String"
+      ]
+    },
+    {
+      "id": "DataEntry",
+      "name": "DataEntry",
+      "kind": "class",
+      "members": [
+        "name : String"
+      ]
+    },
+    {
+      "id": "DataCategory",
+      "name": "DataCategory",
+      "kind": "class",
+      "members": [
+        "name : String"
+      ]
+    },
+    {
+      "id": "CollectingData",
+      "name": "CollectingData",
+      "kind": "class",
+      "members": [
+        "controller : Optional<String>"
+      ]
+    },
+    {
+      "id": "FurtherDataProcessing",
+      "name": "FurtherDataProcessing",
+      "kind": "class",
+      "members": [
+        "kind : String",
+        "timing : Timing"
+      ]
+    },
+    {
+      "id": "AutomatedDecisionMaking",
+      "name": "AutomatedDecisionMaking",
+      "kind": "class",
+      "members": [
+        "involvedLogic : String",
+        "iplications : String"
+      ]
+    },
+    {
+      "id": "StoringData",
+      "name": "StoringData",
+      "kind": "class",
+      "members": [
+        "storeForFixedPeriod : Optional<String>",
+        "storeUntilEvent : Optional<String>",
+        "dataProtection : String",
+        "storageLocation : String"
+      ]
+    },
+    {
+      "id": "TransmittingData",
+      "name": "TransmittingData",
+      "kind": "class",
+      "members": [
+        "concreteRecipient : String",
+        "recipientType : List<RecipientType>",
+        "recipientLocation : List<Location>",
+        "isCommissionedDataProcessing : boolean",
+        "intention : String",
+        "protectionMeasures : String",
+        "timing : Timing"
+      ]
+    },
+    {
+      "id": "RecipientRegion",
+      "name": "RecipientRegion",
+      "kind": "abstract",
+      "members": []
+    },
+    {
+      "id": "EWRLandRecipient",
+      "name": "EWRLandRecipient",
+      "kind": "class",
+      "members": [
+        "countries : List<String>"
+      ]
+    },
+    {
+      "id": "AdequacyDecisionCountryRecipient",
+      "name": "AdequacyDecisionCountryRecipient",
+      "kind": "class",
+      "members": [
+        "countries : List<AdequacyDecisionCountries>"
+      ]
+    },
+    {
+      "id": "SafeguardCountryRecipient",
+      "name": "SafeguardCountryRecipient",
+      "kind": "class",
+      "members": [
+        "countries : List<String>",
+        "safeguard : String",
+        "howToGetCopy : String"
+      ]
+    },
+    {
+      "id": "DeletingData",
+      "name": "DeletingData",
+      "kind": "class",
+      "members": []
+    },
+    {
+      "id": "LawType",
+      "name": "LawType",
+      "kind": "enum",
+      "members": [
+        "RIGHT_OF_ACCESS",
+        "RESTRICTION_OF_PROCESSING",
+        "OBJECTION_TO_PROCESSING",
+        "RIGHT_TO_PORTABILITY",
+        "WITHDRAW_CONSENT",
+        "COMPLAINT",
+        "CORRECTION",
+        "DELETION",
+        "OTHER"
+      ]
+    },
+    {
+      "id": "LegalBasisType",
+      "name": "LegalBasisType",
+      "kind": "enum",
+      "members": [
+        "CONSENT",
+        "STATUTORY_REQUIREMENT",
+        "CONTRACTUAL_REQUIREMENT",
+        "LEGITIMATE_INTEREST",
+        "OTHER",
+        "NOT_APPLICABLE"
+      ]
+    },
+    {
+      "id": "RecipientType",
+      "name": "RecipientType",
+      "kind": "enum",
+      "members": [
+        "USER",
+        "MANUFACTURER",
+        "EXTERNAL_DATA_RECIPIENT",
+        "EXTERNAL_FRIENDS",
+        "PLATFORM_FRIENDS",
+        "PLATFORM_USER"
+      ]
+    },
+    {
+      "id": "Location",
+      "name": "Location",
+      "kind": "enum",
+      "members": [
+        "WEARABLE",
+        "APP",
+        "WEBSITE",
+        "MANUFACTURER_INFRASTRUCTURE",
+        "THIRDPARTY_INFRASTRUCTURE"
+      ]
+    },
+    {
+      "id": "Actor",
+      "name": "Actor",
+      "kind": "enum",
+      "members": [
+        "USER",
+        "MANUFACTURER",
+        "EXTERNAL_DATA_PROVIDER",
+        "EXTERNAL_DATA_RECIPIENT"
+      ]
+    },
+    {
+      "id": "Timing",
+      "name": "Timing",
+      "kind": "enum",
+      "members": [
+        "ONCE",
+        "CONTINUOSLY",
+        "DURING_ACTIVITIES",
+        "NOT_APPLICABLE"
+      ]
+    },
+    {
+      "id": "FormOfAgreement",
+      "name": "FormOfAgreement",
+      "kind": "enum",
+      "members": [
+        "OPTIONAL",
+        "MANDATORY_FOR_FUNCTION",
+        "MANDATORY",
+        "NOT_APPLICABLE"
+      ]
+    },
+    {
+      "id": "AdequacyDecisionCountries",
+      "name": "AdequacyDecisionCountries",
+      "kind": "enum",
+      "members": []
+    }
+  ],
+  "relations": [
+    {
+      "kind": "association",
+      "source": "PrivacyPolicy",
+      "target": "Region",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "PrivacyPolicy",
+      "target": "DataProcessing",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Region",
+      "target": "Law",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Region",
+      "target": "DataProtectionOfficer",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Region",
+      "target": "Controller",
+      "target_multiplicity": "1..*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "DataProtectionOfficer",
+      "target": "Contact",
+      "target_multiplicity": "1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Controller",
+      "target": "Contact",
+      "target_multiplicity": "1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Controller",
+      "target": "RepresentativePerson",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "RepresentativePerson",
+      "target": "Contact",
+      "target_multiplicity": "1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Law",
+      "target": "Right",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "generalization",
+      "source": "RightToComplaint",
+      "target": "Right"
+    },
+    {
+      "kind": "association",
+      "source": "DataProcessing",
+      "target": "Purpose",
+      "target_multiplicity": "1..*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Purpose",
+      "target": "LegalBasis",
+      "target_multiplicity": "1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Purpose",
+      "target": "DataEntry",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "Purpose",
+      "target": "DataCategory",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "DataEntry",
+      "target": "DataEntry",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "DataEntry",
+      "target": "DataCategory",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "generalization",
+      "source": "CollectingData",
+      "target": "DataProcessing"
+    },
+    {
+      "kind": "generalization",
+      "source": "FurtherDataProcessing",
+      "target": "DataProcessing"
+    },
+    {
+      "kind": "association",
+      "source": "FurtherDataProcessing",
+      "target": "AutomatedDecisionMaking",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "generalization",
+      "source": "StoringData",
+      "target": "DataProcessing"
+    },
+    {
+      "kind": "generalization",
+      "source": "TransmittingData",
+      "target": "DataProcessing"
+    },
+    {
+      "kind": "association",
+      "source": "TransmittingData",
+      "target": "RecipientRegion",
+      "target_multiplicity": "*",
+      "navigability": "->"
+    },
+    {
+      "kind": "generalization",
+      "source": "EWRLandRecipient",
+      "target": "RecipientRegion"
+    },
+    {
+      "kind": "generalization",
+      "source": "AdequacyDecisionCountryRecipient",
+      "target": "RecipientRegion"
+    },
+    {
+      "kind": "generalization",
+      "source": "SafeguardCountryRecipient",
+      "target": "RecipientRegion"
+    },
+    {
+      "kind": "generalization",
+      "source": "DeletingData",
+      "target": "DataProcessing"
+    }
+  ],
+  "imports": [
+    "java.time.ZonedDateTime"
+  ]
+}
