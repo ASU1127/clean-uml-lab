@@ -1,0 +1,8 @@
+{
+  "name": "clean-uml-refinement-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional offline SVG measurement dependency; uses an installed browser.",
+  "engines": { "node": ">=22.12.0" },
+  "dependencies": { "puppeteer-core": "25.10.0" }
+}
