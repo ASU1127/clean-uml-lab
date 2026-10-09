@@ -1,4 +1,4 @@
-"""Read explicit text edits from a generated native file and its fact model.
+"""Read explicit text edits and opted-in plain-end reconnections.
 
 Geometry is intentionally discarded for a new layout. Unsupported structural
 edits fail explicitly rather than silently retaining stale source semantics.
@@ -107,7 +107,7 @@ def rename_member_types(text,replacements):
     prefix,_,result=match.group(3).partition(':')
     return match.group(1)+'('+','.join(chunks)+')'+prefix+':'+type_text(result)
 
-def import_edits(path,source_model,page=None):
+def import_edits(path,source_model,page=None,allow_reconnect=False):
     # The caller supplies the exact companion model.json, whose relation order
     # is the order used by edge_N. Never guess indices from the original prompt.
     model,_=normalize_model(source_model)
@@ -118,6 +118,19 @@ def import_edits(path,source_model,page=None):
     def get(cid):
         if cid not in cells:raise ValueError('native structural edit is unsupported; missing '+cid)
         known.add(cid);return cells[cid]
+    classifiers={'node_'+n['id']:n['id'] for n in model['nodes']}
+    def classifier_terminal(cid):
+        # Native edges can attach to the existing frame or its text row. A
+        # qualifier, group, orphan, new object or disconnected line is not a
+        # plain classifier terminal and must not be guessed from its name.
+        if not isinstance(cid,str) or not cid:raise ValueError('reconnection must have an existing classifier terminal; disconnected ends are unsupported')
+        if cid not in known:raise ValueError('reconnection terminal was not part of the matching exported model: '+cid)
+        terminal=get(cid)
+        if cid in classifiers:return classifiers[cid]
+        parent=terminal.get('parent')
+        if terminal.get('vertex')=='1' and parent in classifiers and terminal.get('cleanUmlTextRole') in ('name','header','member'):
+            return classifiers[parent]
+        raise ValueError('reconnection must end on an existing classifier frame or text row: '+str(cid))
     model.pop('package',None)
     for node,old in zip(model['nodes'],original['nodes']):
         cid='node_'+node['id'];container=get(cid)
@@ -128,6 +141,7 @@ def import_edits(path,source_model,page=None):
         if container.get('cleanUmlVisibility')!=old.get('visibility'):raise ValueError('visibility metadata changed independently of its visible title')
         header_count=2 if node['kind'] in ('interface','enum') else 1
         title_cell=get(cid+'_text_'+str(header_count-1));title=title_cell.get('value','').strip()
+        if title_cell.get('parent')!=cid:raise ValueError('classifier title ownership changed: '+cid)
         visibility=None
         if title.startswith('+ '):visibility='public';title=title[2:]
         elif title.startswith('- '):visibility='private';title=title[2:]
@@ -156,6 +170,14 @@ def import_edits(path,source_model,page=None):
         if oldparts!=newparts:renamed[node['id']]=(oldparts,newparts)
         for c in cells.values():
             if c.get('parent')==cid and '_separator_' in c['id']:known.add(c['id'])
+    # Native titles spell out namespaces with ::. Keep the exact original
+    # default/override representation when none of those namespaces was edited;
+    # reconnecting a line must not rewrite unrelated dotted package fields.
+    if all(namespace(model,n)==namespace(original,o) for n,o in zip(model['nodes'],original['nodes'])):
+        if 'package' in original:model['package']=copy.deepcopy(original['package'])
+        for node,old in zip(model['nodes'],original['nodes']):
+            if 'package' in old:node['package']=copy.deepcopy(old['package'])
+            else:node.pop('package',None)
     replacements={}
     for ident,(oldparts,newparts) in renamed.items():
         replacements['.'.join(oldparts)]=newparts
@@ -198,8 +220,18 @@ def import_edits(path,source_model,page=None):
                 before=relation[side+'_qualifier']['name'];after=q.get('value','')
                 relation[side+'_qualifier']['name']=after
                 if before!=after:trace.append(dict(element=eid,field=side+'_qualifier.name',before=before,after=after))
-            if edge.get(side)!=terminal:raise ValueError('relationship reconnection is unsupported: '+eid+'/'+side)
-            if edge.get('cleanUml'+side.title()) not in (None,owner):raise ValueError('logical relationship endpoint changed')
+            if edge.get(side)!=terminal:
+                if not allow_reconnect:raise ValueError('relationship reconnection requires --allow-reconnect: '+eid+'/'+side)
+                if side+'_qualifier' in relation:raise ValueError('qualified-end reconnection is unsupported: '+eid+'/'+side)
+                before=relation[side];after=classifier_terminal(edge.get(side))
+                relation[side]=after
+                if before!=after:trace.append(dict(element=eid,field=side,before=before,after=after,native_terminal=edge.get(side)))
+            # draw.io does not update custom logical metadata when a native
+            # terminal is dragged. Accept only its verified original value or
+            # the new resolved endpoint, never an unrelated metadata edit.
+            logical=edge.get('cleanUml'+side.title())
+            allowed=(None,owner,'node_'+relation[side]) if allow_reconnect else (None,owner)
+            if logical not in allowed:raise ValueError('logical relationship endpoint changed independently of its native terminal')
             if side+'_ordered' in relation and edge.get('cleanUml'+side.title()+'Ordered')!=str(relation[side+'_ordered']).lower():raise ValueError('ordering metadata changed independently of its visible label')
         for side in ('source','target','center'):
             keys=(['label'] if 'label' in relation else []) if side=='center' else [k for k in (side+'_role',side+'_multiplicity',side+'_ordered') if k in relation]
@@ -219,4 +251,4 @@ def import_edits(path,source_model,page=None):
     extra=set(cells)-known
     if extra:raise ValueError('unrecognized native objects; do not silently drop '+', '.join(sorted(extra)[:8]))
     compile_model(model,validate_only=True)
-    return model,dict(scope='Explicit text edits and unambiguous owned type renames from the matching exported model. Original UML identities and relationship kind/endpoints are retained. Structural edits fail explicitly; native positions are discarded for relayout.',edits=trace,classifiers=len(model['nodes']),relations=len(model['relations']),page=page)
+    return model,dict(scope='Explicit text edits, unambiguous owned type renames and opted-in unqualified-end reconnections to existing classifiers from the matching exported model. Classifier and relationship identities, kinds, markers and qualifier ownership are retained. Unsupported structural edits fail explicitly; native positions are discarded for relayout.',edits=trace,classifiers=len(model['nodes']),relations=len(model['relations']),page=page,allow_reconnect=allow_reconnect)
