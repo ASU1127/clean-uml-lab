@@ -1,0 +1,59 @@
+{
+  "scope": "Known complete class-diagram inputs. Optional native label refinement, no class or route movement. Proximity warnings are scale-normalized box-to-connector heuristics, not human preference or UML Property ownership. No broad competitor superiority claim.",
+  "factorial": {
+    "arms": ["control", "alignment", "relocation", "both"],
+    "cases": [
+      {"name": "rental", "warnings": [4, 2, 4, 2]},
+      {"name": "fulfillment", "warnings": [13, 8, 10, 3]},
+      {"name": "InviDas", "warnings": [1, 1, 0, 0]},
+      {"name": "CompanyCars-routed", "warnings": [3, 1, 3, 1]}
+    ],
+    "complete_native_export_checks": 16,
+    "repairs_inside_batch": 0,
+    "actual_final_svg_measurements": 4,
+    "final_label_label_conflicts": 0,
+    "final_label_class_conflicts": 0,
+    "maximum_projection_error_px": 0.000244140625,
+    "projection_tolerance_declared_px": 0.03
+  },
+  "memoization_ablation": {
+    "pairs": 4,
+    "exact_equal_svg_drawio_layout_trace_and_review": true,
+    "fulfillment_single_observation_seconds": {"uncached": 23.0247618, "cached": 4.5066962},
+    "timing_statistics_available": false
+  },
+  "copied_optional_cli": {
+    "checks": 4,
+    "first_calls_passed": 4,
+    "default_team_files_equal_previous_verified_output": true,
+    "refined_cases": ["team", "qualified-bank", "fulfillment-32-classifiers-37-relations"],
+    "each_refined_call": {"initial_pngs": 0, "final_pngs": 1, "font_measurements": 2, "layout_calls": 3},
+    "repairs_inside_batch": 0,
+    "preparation_repair_before_freeze": 1,
+    "environment": "Existing Windows, Python, Node, fonts and previously fresh-installed pinned core dependencies; existing Puppeteer Core. Not new OS or remote CI."
+  },
+  "native_saved_edit": {
+    "scope": "One actual longer role-text save/import/reflow on an aligned 32-class native artifact, not desktop GUI certification",
+    "first_call_passed": true,
+    "only_intended_fact_changed": true,
+    "full_native_export_verified": true,
+    "originals_unchanged": true,
+    "layout_calls": 3,
+    "repairs": 0
+  },
+  "cache_invalidation_probes": {
+    "rejected_changes": ["text", "font_size", "text_length", "graph_geometry", "transform"],
+    "passed": 5
+  },
+  "negative_results_retained": [
+    "Applying a global strict affinity rule made rental and fulfillment label placement fail.",
+    "Choosing refinements from approximate label rectangles increased actual rental proximity warnings from 4 to 6; that variant was not published as a default.",
+    "Frozen competitor proximity bindings were incomplete on some Mermaid scenes; raw fragment counts differ by renderer and are not used as a superiority ranking."
+  ],
+  "remaining_limits": [
+    "Fulfillment class placement still has two crossings and a wide canvas.",
+    "Several final proximity warnings remain.",
+    "New complex holdouts, independent skill trials, human comprehension and full native GUI usability remain unproven.",
+    "The compiler remains a documented UML class-diagram subset."
+  ]
+}
