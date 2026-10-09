@@ -57,6 +57,7 @@ node review_svg.cjs out/bank/diagram.svg --model out/bank/model.json --engine cl
 | 阶段 4.4 检查 | 结果与范围 |
 | --- | --- |
 | 复制技能包运行 | 3 个公开例子生成、1 个保存后的 Bank 文本重排，4/4 通过；都是已有开发案例 |
+| 全新依赖树 | Windows 本机新工作树执行 npm ci；环境/语义检查、3 个示例与 1 个保存文件重排全部通过，操作系统和字体沿用 |
 | 延后 PNG 导出的配对消融 | 6 个案例、12 次调用、批内返工 0；导出次数 16 → 6，最终 SVG/draw.io/PNG 和候选选择逐字节一致；不是总体延迟降低 62.5% |
 | 实图审核 CLI | 从 ZIP 解压后运行 4 次，Clean/Mermaid 订单图无边界冲突，PlantUML 同事实订单图报告 17 对文字边界冲突；只代表这些固定场景 |
 | 原生编辑验证 | 有原生 Graph/mxCodec API 的移动、保存、重载和命中证据；复杂编辑仍有失败案例，未认证完整桌面 GUI 操作 |

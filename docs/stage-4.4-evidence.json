@@ -32,5 +32,11 @@
   "stage_archive_sha256": "8446e838aece56055f0918cd2ca78e3512f9f3232ccba5c9905b3da55ac23d6b",
   "fresh_ci": "Template prepared; publishing an active workflow requires additional GitHub workflow authorization. Remote CI not verified.",
   "all_competitors_surpassed": false,
-  "human_aesthetic_certification": false
+  "human_aesthetic_certification": false,
+  "fresh_dependency_tree_windows": {
+    "commands": 6,
+    "all_passed": true,
+    "repairs": 0,
+    "scope": "New worktree and npm ci dependency tree; existing Windows OS, Python, Node and system fonts. Not a fresh OS or remote CI test."
+  }
 }
