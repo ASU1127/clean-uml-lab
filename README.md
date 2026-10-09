@@ -2,7 +2,7 @@
 
 从结构化事实生成简洁、可审核的 UML 类图，输出 **SVG、PNG 和可编辑 draw.io**。可作为 agent skill 或本地 CLI 使用。
 
-本分支更新到内部阶段 **4.4**：原生文字自动扩框、保存后的文本重排、只导出一次最终 PNG，以及可选的实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
+本分支包含阶段 **4.4** 和可选的实测标签优化预览：原生文字自动扩框、保存后的文本重排、只导出一次最终 PNG，以及实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
 
 ![带限定符的关联](docs/images/qualified-bank.png)
 
@@ -52,6 +52,14 @@ node review_svg.cjs out/bank/diagram.svg --model out/bank/model.json --engine cl
 
 也可审核带完整同源模型的 PlantUML/Mermaid 类图 SVG，分别用 `--engine plantuml`、`--engine mermaid`。工具在独立离线浏览器中量取文字边界；无冲突为退出码 0，需要检查为 2，执行失败为 3。它检查文字边界冲突，不认证像素重叠、角色归属、业务事实或人类审美。
 
+可选一键标签优化复用上面的审核依赖：
+
+```sh
+python refinement/create_uml.py examples/InviDas.json -o out/invidas-refined --puppeteer-module ./out/review-runtime/node_modules/puppeteer-core
+```
+
+它使用实测文字边界，让短多重性朝自己的连线对齐，并尝试移动有歧义风险的标签。只测量初始和最终 SVG，搜索中复用边界，最终导出一次 PNG。类框与连线不移动；失败时保留原始有效位置。`proximity-review.json` 中的距离提示需要读图确认，不代表 UML 语义错误。`--no-align`、`--no-refine`、`--no-cache-distances` 可分别消融对齐、标签移动和距离缓存。[固定案例证据](docs/measured-label-evidence.json)；复杂图过宽和交叉仍待解决。
+
 ## 验证与边界
 
 | 阶段 4.4 检查 | 结果与范围 |
@@ -79,3 +87,5 @@ python verify_semantics.py out/semantic-probes
 ![InviDas：32 个类与枚举](docs/images/InviDas.png)
 
 [可编辑工业例图](docs/images/InviDas.drawio) · [SVG](docs/images/InviDas.svg) · [中文小例子](docs/images/team.png)
+
+[标签优化后的 InviDas SVG](docs/images/InviDas-refined.svg) · [对应 draw.io](docs/images/InviDas-refined.drawio)
