@@ -1,0 +1,36 @@
+{
+  "internal_stage": "4.4",
+  "core_files": 62,
+  "code_license": "MIT",
+  "known_development_cases": true,
+  "unseen_or_independent_skill_trial": false,
+  "copied_package_smoke": {
+    "calls": 4,
+    "passed": true,
+    "repairs_inside_batch": 0,
+    "scope": "One copied-package generation call on each supplied public example and one saved-text reflow call. Known development smoke checks; not fresh competition or an unseen benchmark. Uses the already installed pinned dependency modules through explicit paths."
+  },
+  "deferred_raster_ablation": {
+    "cases": 6,
+    "calls": 12,
+    "png_exports_previews": 16,
+    "png_exports_deferred": 6,
+    "outputs_and_selection_identical": true,
+    "overall_latency_reduction_percent": null,
+    "scope": "Known cases; same candidates and layout work; one timing observation per arm."
+  },
+  "rendered_text_reviewer": {
+    "unpacked_cli_checks": "4/4",
+    "fixed_fulfillment_bounds": {
+      "clean": 0,
+      "mermaid": 0,
+      "plantuml": 17
+    },
+    "scope": "Bounds intersections, not confirmed ink collisions or generalized competitor superiority."
+  },
+  "native_edit_limit": "API tests are not full GUI certification; complex edits retain known failed hit checks. Reflow requires matching model and supports text edits only.",
+  "stage_archive_sha256": "8446e838aece56055f0918cd2ca78e3512f9f3232ccba5c9905b3da55ac23d6b",
+  "fresh_ci": "Template prepared; publishing an active workflow requires additional GitHub workflow authorization. Remote CI not verified.",
+  "all_competitors_surpassed": false,
+  "human_aesthetic_certification": false
+}

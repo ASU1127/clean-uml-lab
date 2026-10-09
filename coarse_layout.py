@@ -5,7 +5,7 @@ from fan_layout import points
 from cached_route_metrics import CachedMeasure
 
 
-def propose(model,template,ir,folder,node,elk,reorder=False,label_aware=False,spine=False,route_all=False,root=None,corner_routes=False,tight_regions=False,compact_spacing=False,spread_ports=False,component_pack=False,center_sources=False):
+def propose(model,template,ir,folder,node,elk,reorder=False,label_aware=False,spine=False,route_all=False,root=None,corner_routes=False,tight_regions=False,compact_spacing=False,spread_ports=False,component_pack=False,center_sources=False,visible_qualifier_endpoints=True,qualifier_obstacles=True,qualifier_gap=False):
     owners={n:r['id'] for r in ir['regions'] for n in r['members']}
     ns={n['id']:n for n in template['children']}
     local={};calls=0
@@ -53,7 +53,16 @@ def propose(model,template,ir,folder,node,elk,reorder=False,label_aware=False,sp
         from region_spine import links
         placement_pairs,stats=links(model,owners,root)
         (folder/'spine.json').write_text(json.dumps(stats),encoding='utf-8')
-    quotient=dict(id='root',layoutOptions={**template['layoutOptions'],'elk.spacing.nodeNode':'48' if compact_spacing else '72','elk.layered.spacing.nodeNodeBetweenLayers':'60' if compact_spacing else '100'},children=[dict(id=rid,width=g['width'],height=g['height']) for rid,g in local.items()],edges=[dict(id='regionlink_'+str(i),sources=[a],targets=[b]) for i,(a,b) in enumerate(placement_pairs)])
+    spacing=60 if compact_spacing else 100
+    if qualifier_gap:
+        vertical=template['layoutOptions'].get('elk.direction','DOWN') in ('DOWN','UP')
+        axis='height' if vertical else 'width'
+        for edge in template['edges']:
+            if edge.get('qualifier_sizes'):
+                depth=sum(q[axis] for q in edge['qualifier_sizes'].values())
+                label=max((l[axis] for l in edge.get('labels',[]) if not l['id'].endswith('_center')),default=0)
+                spacing=max(spacing,depth+2*label+24)
+    quotient=dict(id='root',layoutOptions={**template['layoutOptions'],'elk.spacing.nodeNode':'48' if compact_spacing else '72','elk.layered.spacing.nodeNodeBetweenLayers':str(spacing)},children=[dict(id=rid,width=g['width'],height=g['height']) for rid,g in local.items()],edges=[dict(id='regionlink_'+str(i),sources=[a],targets=[b]) for i,(a,b) in enumerate(placement_pairs)])
     placed=layout(quotient,'quotient')
     if component_pack:
         if not route_all:raise ValueError('Component packing requires rebuilding non-loop routes')
@@ -97,10 +106,21 @@ def propose(model,template,ir,folder,node,elk,reorder=False,label_aware=False,sp
     if spread_ports:
         from port_routes import options
         router=options
-    for e in sorted(boundary,key=lambda e:(priorities[model['relations'][int(e['id'].split('_')[1])]['kind']],e['id'])):
+    def qualifiers_of(known_edges):
+        from qualifier_layout import edge_geometry
+        graph=dict(children=nodes,edges=known_edges)
+        boxes=[]
+        for edge in known_edges:
+            if not edge.get('qualifier_sizes'):continue
+            _,widgets=edge_geometry(graph,edge,model)
+            for side,widget in widgets.items():boxes.append(dict(id=edge['id']+'_'+side+'_routing_obstacle',**{k:widget[k] for k in ('x','y','width','height')}))
+        return boxes
+    ordered=sorted(boundary,key=lambda e:((not bool(e.get('qualifier_sizes'))) if qualifier_obstacles else False,priorities[model['relations'][int(e['id'].split('_')[1])]['kind']],e['id']))
+    for e in ordered:
         a,b=e['sources'][0],e['targets'][0]
         candidates=[]
-        for ps in router(byid[a],byid[b],nodes):
+        extra=qualifiers_of(edges) if qualifier_obstacles else []
+        for ps in router(byid[a],byid[b],nodes+extra):
             rm=measure(dict(width=placed['width'],height=placed['height'],edges=[dict(index=f['id'],points=[xy(p) for p in points(f)]) for f in edges]+[dict(index=e['id'],points=[xy(p) for p in ps])]))
             candidates.append(((rm['other_contacts'],rm['shared_track_length'],rm['proper_crossings'],len(ps),sum(math.dist(xy(a),xy(b)) for a,b in zip(ps,ps[1:]))),ps))
         if not candidates:raise ValueError('No unobstructed cross-region route for '+e['id'])
@@ -113,7 +133,13 @@ def propose(model,template,ir,folder,node,elk,reorder=False,label_aware=False,sp
                 trial['sections']=[dict(startPoint=ps[0],endPoint=ps[-1],bendPoints=ps[1:-1])]
                 for label in trial.get('labels',[]):label.update(x=0,y=0)
                 partial=dict(width=placed['width'],height=placed['height'],children=nodes,edges=copy.deepcopy(edges)+[trial])
-                if solve(partial,limit=1000,model=model,preserve_edges={f['id'] for f in edges}):
+                if qualifier_obstacles and trial.get('qualifier_sizes'):
+                    from tree_layout import hits_box
+                    from fan_layout import box
+                    try:widgets=qualifiers_of([trial])
+                    except ValueError:continue
+                    if any(hits_box(xy(u),xy(v),box(widget)) for f in edges for u,v in zip(points(f),points(f)[1:]) for widget in widgets):continue
+                if solve(partial,limit=1000,model=model,preserve_edges={f['id'] for f in edges},visible_qualifier_endpoints=visible_qualifier_endpoints):
                     chosen=partial['edges'];break
             if chosen is None:raise ValueError('No label-feasible cross-region route for '+e['id'])
             edges=chosen

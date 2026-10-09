@@ -29,17 +29,24 @@ def marker_boxes(g,model,qualifier_clearance=True):
    result.append((min(x for x,y in pts)-4,min(y for x,y in pts)-4,max(x for x,y in pts)+4,max(y for x,y in pts)+4))
  return result
 
-def solve(g,limit=10000,model=None,preserve_edges=(),qualifier_clearance=True):
+def solve(g,limit=10000,model=None,preserve_edges=(),qualifier_clearance=True,visible_qualifier_endpoints=True):
  labels=[(e,l) for e in g['edges'] for l in e.get('labels',[])]
  nodes=[box(n,3) for n in g['children']]
  if model is not None:
   try:nodes+=marker_boxes(g,model,qualifier_clearance=qualifier_clearance)
   except ValueError:return False
- routes=[((a['x'],a['y']),(b['x'],b['y'])) for e in g['edges'] for a,b in zip(points(e),points(e)[1:])]
+ def routed_points(e):
+  if visible_qualifier_endpoints and model is not None and e.get('qualifier_sizes'):
+   ps,_=edge_geometry(g,e,model)
+   if e.get('semanticReverse',False):ps=list(reversed(ps))
+   return [dict(x=x,y=y) for x,y in ps]
+  return points(e)
+ try:routes=[((a['x'],a['y']),(b['x'],b['y'])) for e in g['edges'] for a,b in zip(routed_points(e),routed_points(e)[1:])]
+ except ValueError:return False
  options=[]
  for e,l in labels:
   side=l['id'].rsplit('_',1)[-1];tail=(side=='source')!=e.get('semanticReverse',False)
-  ps=points(e);segs=[((a['x'],a['y']),(b['x'],b['y'])) for a,b in zip(ps,ps[1:])]
+  ps=routed_points(e);segs=[((a['x'],a['y']),(b['x'],b['y'])) for a,b in zip(ps,ps[1:])]
   if side!='center' and not tail:segs=[(b,a) for a,b in reversed(segs)]
   candidates=[]
   # Unchanged routes may have valid placements outside the sampled offsets,
