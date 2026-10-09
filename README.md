@@ -2,7 +2,7 @@
 
 从结构化事实生成简洁、可审核的 UML 类图，输出 **SVG、PNG 和可编辑 draw.io**。可作为 agent skill 或本地 CLI 使用。
 
-本分支包含阶段 **4.4** 核心和 **4.6 路由/标签优化预览**：原生文字自动扩框、保存后的文本重排、只导出一次最终 PNG，以及实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
+本分支包含阶段 **4.4** 核心、**4.6 路由/标签优化**和 **4.7 原生重连预览**：文字自动扩框、保存后的编辑重排、只导出一次最终 PNG，以及实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
 
 ![带限定符的关联](docs/images/qualified-bank.png)
 
@@ -39,7 +39,16 @@ python prototype.py examples/InviDas.json -o out/invidas
 python reflow.py edited.drawio --model out/bank/model.json -o out/bank-reflow
 ```
 
-支持类名、成员行、角色、多重性、关系标签和限定符文字的修改；新增/删除类、改连接或改 UML 类型会被拒绝。重排保留源文件，生成新模型和新图，替换手动坐标。不是与 JSON 的实时同步。
+支持类名、成员行、角色、多重性、关系标签和限定符文字的修改。将普通连接端拖到已有类框或文字行后，使用 `--allow-reconnect` 导入重连；限定符端仍固定归属，另一侧的普通端可以重连。导入记录逐项列出改动，关系种类、箭头、角色与多重性保持原值，继承循环等无效连接会被拒绝。新增/删除类、改变 UML 类型或限定符归属仍未支持。重排保留源文件，生成新模型和新图，替换手动坐标。不是与 JSON 的实时同步。
+
+可直接运行原生保存的重连样例：
+
+```sh
+python verify_reconnect.py
+python reflow.py examples/native-reconnect.drawio --model examples/native-reconnect.model.json --allow-reconnect -o out/native-reconnect
+```
+
+17 个固定 draw.io 原生 API 保存/重载样例、34 次严格/重连导入检查和 4 次完整重排均通过。包含普通端、文字行端、组合源端、自关联、限定符另一端及无效修改；未改的命名空间保留原始格式。验证中修过一次模型比较脚本和一次命名空间格式保留问题，首次中断记录保留。[重连证据](docs/native-reconnect-evidence.json)。这些是本机原生 API 检查，未认证完整桌面 GUI，也不代表复杂图布局已经提升。
 
 ## 实图文字审核
 

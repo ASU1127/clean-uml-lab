@@ -1,0 +1,107 @@
+{
+  "scope": "17 fixed offline draw.io 30.0.4 Graph.connectCell/mxCodec saved-edit fixtures on a known 13-class rental and an explicit 3-class qualified bank software fixture. Default strict import and explicit plain-end reconnect. Windows local API checks; not user desktop GUI, independent unseen business tasks, human aesthetics or layout superiority.",
+  "version": "stage-4.7-native-reconnect-preview",
+  "drawio_version": "30.0.4",
+  "native_cases": 17,
+  "native_save_reload_passed": true,
+  "all_text_unchanged": true,
+  "import_checks": 34,
+  "expected_results_passed": true,
+  "accepted_cases": [
+    "unchanged",
+    "unchanged-bank",
+    "association-frame",
+    "association-title",
+    "composition-source",
+    "generalization-target",
+    "dependency-target",
+    "self-association",
+    "qualified-opposite-frame",
+    "qualified-opposite-member"
+  ],
+  "rejected_cases": [
+    {
+      "case": "reject-qualified-end",
+      "reason": "qualified-end reconnection is unsupported: edge_0/source"
+    },
+    {
+      "case": "reject-disconnected",
+      "reason": "reconnection must have an existing classifier terminal; disconnected ends are unsupported"
+    },
+    {
+      "case": "reject-self-inheritance",
+      "reason": "self relationship unsupported for this relation kind"
+    },
+    {
+      "case": "reject-inheritance-cycle",
+      "reason": "generalization cycle"
+    },
+    {
+      "case": "reject-marker-change",
+      "reason": "relationship marker/kind edit is unsupported: edge_2/endArrow"
+    },
+    {
+      "case": "reject-independent-metadata",
+      "reason": "logical relationship endpoint changed independently of its native terminal"
+    },
+    {
+      "case": "reject-qualifier-ownership",
+      "reason": "qualifier ownership metadata changed"
+    }
+  ],
+  "complete_reflows": [
+    {
+      "case": "association-frame",
+      "exit": 0,
+      "exact_expected_model": true,
+      "native_export_verified": true,
+      "layout_calls": 3,
+      "pngs": 1
+    },
+    {
+      "case": "composition-source",
+      "exit": 0,
+      "exact_expected_model": true,
+      "native_export_verified": true,
+      "layout_calls": 3,
+      "pngs": 1
+    },
+    {
+      "case": "self-association",
+      "exit": 0,
+      "exact_expected_model": true,
+      "native_export_verified": true,
+      "layout_calls": 4,
+      "pngs": 1
+    },
+    {
+      "case": "qualified-opposite-frame",
+      "exit": 0,
+      "exact_expected_model": true,
+      "native_export_verified": true,
+      "layout_calls": 3,
+      "pngs": 1
+    }
+  ],
+  "total_commands": 5,
+  "total_layout_calls": 16,
+  "total_png_exports": 5,
+  "final_batch_repairs": 0,
+  "prior_validation_harness_fixes": 1,
+  "prior_product_fixes": 1,
+  "first_run": "Retained; interrupted by comparing pre-canonical relation order.",
+  "second_run": "Retained; exposed pre-existing rewriting of untouched dotted/default namespaces. No lost UML namespace, but an unrelated representation change. Fixed to preserve exact encoding when namespaces are untouched.",
+  "final_batch_code_and_inputs_unchanged": true,
+  "default_generator_and_routing": "Unchanged from stage 4.6; unsuccessful compact/rerouting experiments were not promoted.",
+  "github_actions": "Not enabled; user chose to upload product code only.",
+  "final_importer_revalidation": {
+    "checks": 42,
+    "native_api_fixtures_reused": 17,
+    "additional_invalid_xml_fixtures": 4,
+    "all_expected_results": true,
+    "new_layout_calls": 0,
+    "new_pngs": 0,
+    "importer_sha256": "30125e67c135bed6391cfc42ac055fdf55f8364c3231fa3ef7ec182124178abe",
+    "scope": "Final importer adds checks for undeclared terminals and moved classifier titles. Revalidated every previous native saved model and rejected injected text, orphan frames, moved titles and separator terminals. No GUI interaction or regenerated successful diagram."
+  }
+}

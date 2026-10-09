@@ -11,6 +11,7 @@ def main():
     p.add_argument('drawio',type=Path)
     p.add_argument('--model',required=True,type=Path,help='The model.json exported beside this diagram, not an unsorted source prompt')
     p.add_argument('--page')
+    p.add_argument('--allow-reconnect',action='store_true',help='Import unqualified ends dragged to existing classifier frames or text rows; kinds, markers and qualifier ownership stay fixed')
     p.add_argument('-o','--output',required=True,type=Path)
     p.add_argument('--root')
     p.add_argument('--no-qualifier-clearance',action='store_true',help='Ablate the measured qualifier-spacing fallback')
@@ -22,7 +23,7 @@ def main():
     try:
         if args.output.exists():raise ValueError('Output directory already exists; choose a new directory')
         source=json.loads(args.model.read_text(encoding='utf-8-sig'))
-        model,trace=import_edits(args.drawio,source,args.page)
+        model,trace=import_edits(args.drawio,source,args.page,allow_reconnect=args.allow_reconnect)
         # Imports, source edits and the layout invocation are all recorded in
         # the new output. Do not overwrite the editable file or companion.
         invocation=argparse.Namespace(model=str(args.model),input_model=model,output=str(args.output),root=args.root,node=args.node,sharp_module=args.sharp_module,elk_module=args.elk_module,fontconfig=args.fontconfig,requirements=None,research_intrinsic=False,research_regions=False,no_qualifier_clearance=args.no_qualifier_clearance)
