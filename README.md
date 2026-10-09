@@ -68,7 +68,7 @@ npm ci --prefix refinement --no-audit --no-fund
 python refinement/create_uml.py examples/InviDas.json -o out/invidas-refined
 ```
 
-它保持类框和完整语义，尝试自然斜线与较少折点的连接，并优化标签。原图、新路线分别测量文字边界，再实测最终结果；通常 2–3 次，实际回退最多 4 次。搜索中不调用浏览器、不导出 PNG，最终 PNG 只导出一次。路线变好却增加标签距离提示时，保留标签优化后的原路线。`--no-routes`、`--no-prefix-routing`、`--no-crossing-tradeoff` 可分别消融路由、路径前缀和交叉取舍；原有标签消融开关保留。
+它保持类框和完整语义，尝试自然斜线与较少折点的连接，并优化标签。原图、新路线分别测量文字边界，再实测最终结果；通常 2–3 次，实际回退最多 4 次。搜索中不调用浏览器、不导出 PNG，最终 PNG 只导出一次。路线的标签提示须通过旧标签流程的验收基线；新增标签优化不能撤销旧流程已接纳的绕线改善。`--no-routes`、`--no-prefix-routing`、`--no-crossing-tradeoff` 可分别消融路由、路径前缀和交叉取舍；原有标签消融开关保留。
 
 新增标签位置搜索复用已量取的真实字体边界，保留类框、连线、文字和字体，只移动有距离提示的标签。每次最多 12 个标签、每标签 96 个位置、10,000 个搜索状态；搜索不增加浏览器或 PNG 调用。`--no-font-domains` 关闭新增搜索，`--no-measured-fragments` 和 `--no-dense-prefix` 分别消融实测片段与密集前缀采样；`--no-refine` 关闭全部标签优化。
 
