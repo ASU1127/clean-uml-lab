@@ -1,0 +1,251 @@
+{
+  "stage": "4.6 optional bounded route and measured-label preview",
+  "scope": "Known complete models and two seeded fresh synthetic stress inputs after policy freeze. Not independently authored requirements, independent LLM skills, human preference or an all-tools win.",
+  "known_factorial": {
+    "inputs": 6,
+    "arms": 4,
+    "valid_native_exports": 24,
+    "repairs": 0,
+    "mechanisms": [
+      "crossing-first bounded growth",
+      "endpoint-prefix label sampling"
+    ],
+    "control": "strict route/length dominance with the legacy endpoint-first-segment label solver",
+    "observations": [
+      {
+        "case": "rental",
+        "original_bends": 4,
+        "full_bends": 1,
+        "remaining_crossings": 0
+      },
+      {
+        "case": "fulfillment",
+        "original_bends": 8,
+        "full_bends": 2,
+        "remaining_crossings": 2
+      },
+      {
+        "case": "InviDas",
+        "original_bends": 5,
+        "full_bends": 4,
+        "remaining_crossings": 0
+      }
+    ]
+  },
+  "actual_font_validation": {
+    "measurements": 9,
+    "observations": [
+      {
+        "case": "rental",
+        "prior_product_refined_warnings": 2,
+        "refined_warnings": 1,
+        "label_label": 0,
+        "label_class": 0,
+        "projection_error_px": 0.0
+      },
+      {
+        "case": "fulfillment",
+        "prior_product_refined_warnings": 3,
+        "refined_warnings": 2,
+        "label_label": 0,
+        "label_class": 0,
+        "projection_error_px": 0.000244140625
+      },
+      {
+        "case": "InviDas",
+        "prior_product_refined_warnings": 0,
+        "refined_warnings": 0,
+        "label_label": 0,
+        "label_class": 0,
+        "projection_error_px": 9.726262533149566e-05
+      }
+    ]
+  },
+  "fresh_factorial": {
+    "inputs": 2,
+    "arms": 4,
+    "valid_native_exports": 8,
+    "repairs": 0,
+    "seeds": [
+      1531170497,
+      485643458
+    ],
+    "candidate_only_result": "modular-32 full routing lowers crossings 3 to 1; final CLI rejects it for increasing refined proximity warnings from 5 to 6. Delivered output remains at 3 crossings."
+  },
+  "portable_cli": {
+    "commands": 6,
+    "exit_zero": 6,
+    "actual_batch_repairs": 0,
+    "new_layout_calls": 9,
+    "font_measurements": 15,
+    "pngs": 6,
+    "no_routes_ablation_exact_prior_artifacts": {
+      "diagram.svg": true,
+      "diagram.drawio": true,
+      "diagram.png": true,
+      "model.json": true
+    },
+    "observations": [
+      {
+        "case": "label-only-fulfillment",
+        "status": "needs_review",
+        "original_crossings": 2,
+        "final_crossings": 2,
+        "original_bends": 8,
+        "final_bends": 8,
+        "baseline_proximity_warnings": 13,
+        "final_proximity_warnings": 3,
+        "routes_accepted": false,
+        "seconds": 6.877213799976744
+      },
+      {
+        "case": "team",
+        "status": "checks_passed",
+        "original_crossings": 0,
+        "final_crossings": 0,
+        "original_bends": 0,
+        "final_bends": 0,
+        "baseline_proximity_warnings": 0,
+        "final_proximity_warnings": 0,
+        "routes_accepted": false,
+        "seconds": 2.9730530999950133
+      },
+      {
+        "case": "qualified-bank",
+        "status": "checks_passed",
+        "original_crossings": 0,
+        "final_crossings": 0,
+        "original_bends": 0,
+        "final_bends": 0,
+        "baseline_proximity_warnings": 0,
+        "final_proximity_warnings": 0,
+        "routes_accepted": false,
+        "seconds": 2.9286834999802522
+      },
+      {
+        "case": "fulfillment",
+        "status": "needs_review",
+        "original_crossings": 2,
+        "final_crossings": 2,
+        "original_bends": 8,
+        "final_bends": 2,
+        "baseline_proximity_warnings": 13,
+        "final_proximity_warnings": 2,
+        "routes_accepted": true,
+        "seconds": 40.59619950002525
+      },
+      {
+        "case": "modular-22",
+        "status": "needs_review",
+        "original_crossings": 0,
+        "final_crossings": 0,
+        "original_bends": 1,
+        "final_bends": 1,
+        "baseline_proximity_warnings": 1,
+        "final_proximity_warnings": 1,
+        "routes_accepted": true,
+        "seconds": 7.773814200016204
+      },
+      {
+        "case": "modular-32",
+        "status": "needs_review",
+        "original_crossings": 3,
+        "final_crossings": 3,
+        "original_bends": 3,
+        "final_bends": 3,
+        "baseline_proximity_warnings": 15,
+        "final_proximity_warnings": 5,
+        "routes_accepted": false,
+        "seconds": 27.506047800008673
+      }
+    ],
+    "timing_scope": "Single observed runtimes, no latency-statistics claim. Final automatic local module discovery was then verified from the actual unpacked archive."
+  },
+  "unpacked_install": {
+    "core_and_optional_dependency_trees_initially_empty": true,
+    "commands": 5,
+    "all_passed": true,
+    "default_optional_module_path_verified": true,
+    "scope": "Same Windows OS, installed browser, fonts and Node/Python reused; not a new machine or remote CI."
+  },
+  "native_saved_edit": {
+    "only_intended_fact_changed": true,
+    "native_export_verified": true,
+    "scope": "One saved longer role edit imported and reflowed once; not desktop GUI or arbitrary structural edit acceptance."
+  },
+  "paired_renderers": {
+    "versions": {
+      "mermaid": "12.1.0",
+      "mermaid_cli": "12.0.0",
+      "plantuml_jar": "C:\\Users\\Bob\\Documents\\Codex\\2026-09-07\\zuo-w\\work\\render-runtime\\plantuml-1.2026.6.jar",
+      "plantuml_sha256": "e620ae095a2ba0134d3c33fd5ae34ff01e785f3df1796c0898802b8761a033a8"
+    },
+    "observations": [
+      {
+        "case": "modular-22",
+        "engine": "plantuml",
+        "crossings": 0,
+        "label_label_bounds": 9,
+        "label_class_bounds": 0,
+        "width_at_16px_font": 2075,
+        "longest_visible_route": 644.063594759327
+      },
+      {
+        "case": "modular-22",
+        "engine": "mermaid",
+        "crossings": 0,
+        "label_label_bounds": 0,
+        "label_class_bounds": 0,
+        "width_at_16px_font": 2321.092529296875,
+        "longest_visible_route": 1855.860395302309
+      },
+      {
+        "case": "modular-22",
+        "engine": "clean",
+        "crossings": 0,
+        "label_label_bounds": 0,
+        "label_class_bounds": 0,
+        "width_at_16px_font": 2520.166748046875,
+        "longest_visible_route": 1327.4082842479352
+      },
+      {
+        "case": "modular-32",
+        "engine": "plantuml",
+        "crossings": 5,
+        "label_label_bounds": 15,
+        "label_class_bounds": 0,
+        "width_at_16px_font": 3143,
+        "longest_visible_route": 1571.2030322824457
+      },
+      {
+        "case": "modular-32",
+        "engine": "mermaid",
+        "crossings": 3,
+        "label_label_bounds": 0,
+        "label_class_bounds": 0,
+        "width_at_16px_font": 3536.74609375,
+        "longest_visible_route": 1785.2765949867044
+      },
+      {
+        "case": "modular-32",
+        "engine": "clean",
+        "crossings": 3,
+        "label_label_bounds": 0,
+        "label_class_bounds": 0,
+        "width_at_16px_font": 3880,
+        "longest_visible_route": 2687.56771453826
+      }
+    ],
+    "scope": "Fixed complete facts, conventional parent-first declarations, pinned 16px monochrome PlantUML polyline/Mermaid ELK. Text bounding boxes are not ink; proximity warnings are a separate heuristic. Renderer controls are not independent generative skill trials."
+  },
+  "rejected_research": "Two-corner detour pass on three known cases: no crossing improvement; retained locally and not bundled.",
+  "incomplete": [
+    "complex width and remaining crossings",
+    "independent generative drawing-skill comparisons",
+    "human comprehension and preference",
+    "fresh independent complex real-world tasks",
+    "full desktop-native editing",
+    "unsupported UML facts and classifier capacity"
+  ],
+  "complete_goal_proven": false
+}

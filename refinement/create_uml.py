@@ -1,4 +1,4 @@
-"""Optional one-call generation with measured end-label refinement.
+"""One-call generation with bounded routes and measured end-label refinement.
 
 Needs the local Clean UML core, Puppeteer Core and Chrome/Chromium/Edge. Existing
 complete generation output can also be refined into a separate new directory.
@@ -39,10 +39,17 @@ def main():
     parser.add_argument('--no-align', action='store_true')
     parser.add_argument('--no-refine', action='store_true')
     parser.add_argument('--no-cache-distances', action='store_true')
+    parser.add_argument('--no-routes', action='store_true', help='Ablate all new routing; retain the label-only workflow')
+    parser.add_argument('--no-prefix-routing', action='store_true', help='Ablate path-prefix sampling in the routing solver')
+    parser.add_argument('--no-crossing-tradeoff', action='store_true', help='Ablate crossing reduction with bounded detour growth')
     args = parser.parse_args()
     if bool(args.model) == bool(args.generation_dir):
         parser.error('Supply exactly one model or --generation-dir')
     core = Path(args.core_dir).resolve()
+    if args.puppeteer_module == 'puppeteer-core':
+        local_modules = [Path(__file__).resolve().parent/'node_modules/puppeteer-core',
+                         core/'runtime/node_modules/puppeteer-core']
+        args.puppeteer_module = next((str(p) for p in local_modules if p.is_dir()), args.puppeteer_module)
     if Path(args.puppeteer_module).exists():
         args.puppeteer_module = str(Path(args.puppeteer_module).resolve())
     if not (core/'prototype.py').is_file() or not (core/'review_svg.cjs').is_file():
@@ -57,6 +64,9 @@ def main():
     from measured_labels import improve
     from render_cache_fast import RenderCache
     from affinity_review import bind, assess
+    from measured_labels import score
+    from bounded_routes import improve as improve_routes
+    from route_metrics import measure as route_metrics
     started = time.perf_counter()
     out = Path(args.output).resolve()
     if out.exists():
@@ -104,7 +114,7 @@ def main():
     def measure(svg_path, destination):
         nonlocal browser_calls
         browser_calls += 1
-        if browser_calls > 2:
+        if browser_calls > 4:
             raise ValueError('Browser measurement budget exceeded')
         command = [args.node, str(core/'review_svg.cjs'), str(svg_path), '--model', str(out/'model.json'),
                    '--engine', 'clean', '--output', str(destination), '--python', sys.executable,
@@ -123,6 +133,40 @@ def main():
     cache = RenderCache(original_svg, model, measured, cache_distances=not args.no_cache_distances)
     g, svg, scene, trace = improve(model, metrics, graph, cache,
                                  align=not args.no_align, refine=not args.no_refine)
+    old_g, old_svg, old_scene, old_trace, old_cache = g, svg, scene, trace, cache
+    (measurement/'original-refined.svg').write_bytes(old_svg)
+    save(out/'original-refinement.json', old_trace)
+    original_refined_review = cache.review(svg)
+    routing = dict(enabled=not args.no_routes, changed=False, accepted=False,
+                   label_solver_calls=0, new_layout_calls=0)
+    route_refinement = None
+    label_solves = trace['label_solves']
+    if not args.no_routes:
+        routed, routing = improve_routes(model, graph,
+                                        tradeoff=not args.no_crossing_tradeoff,
+                                        prefix=not args.no_prefix_routing)
+        routing['enabled'] = True
+        if routing['changed']:
+            route_svg, route_scene = draw(model, metrics, routed)
+            route_svg = annotated(route_svg, routed)
+            if audit_svg(route_svg, model)['findings'] or findings(route_svg):
+                raise ValueError('Bounded route proposal failed complete native geometry checks')
+            route_file = measurement/'routed.svg'
+            route_file.write_bytes(route_svg)
+            route_measured = measure(route_file, out/'routed-review')
+            route_cache = RenderCache(route_svg, model, route_measured,
+                                      cache_distances=not args.no_cache_distances)
+            rg, rsvg, rscene, route_refinement = improve(model, metrics, routed, route_cache,
+                                                        align=not args.no_align, refine=not args.no_refine)
+            label_solves += route_refinement['label_solves']
+            proposed_review = route_cache.review(rsvg)
+            # Typography caches are tied to separately measured fixed routes.
+            # A geometric improvement cannot license worse measured ambiguity.
+            routing['original_refined_score'] = score(original_refined_review)
+            routing['routed_refined_score'] = score(proposed_review)
+            routing['accepted'] = score(proposed_review) <= score(original_refined_review)
+            if routing['accepted']:
+                g, svg, scene, trace, cache = rg, rsvg, rscene, route_refinement, route_cache
     proposal = measurement/'proposal.svg'
     proposal.write_bytes(svg)
     final_measured = measure(proposal, out/'final-review')
@@ -134,16 +178,44 @@ def main():
     baseline_review = assess(bind(original_svg, model, measured))
     review = assess(bind(svg, model, final_measured))
     bounds = json.loads((out/'final-review/review.json').read_text(encoding='utf-8'))
-    fallback = error > .03 or bool(bounds['label_label_conflicts'] or bounds['label_classifier_conflicts']) or len(review['proximity_warnings']) > len(baseline_review['proximity_warnings'])
+    fallback = error > .03 or bool(bounds['label_label_conflicts'] or bounds['label_classifier_conflicts']) or score(review) > score(original_refined_review)
+    selected_review = 'final-review'
+    fallback_to_original = False
     if fallback:
-        g, svg, scene = graph, original_svg, original_scene
-        review = baseline_review
+        if routing.get('accepted'):
+            fallback_file = measurement/'fallback.svg'
+            fallback_file.write_bytes(old_svg)
+            fallback_measured = measure(fallback_file, out/'fallback-review')
+            fallback_bounds = json.loads((out/'fallback-review/review.json').read_text(encoding='utf-8'))
+            fallback_projected = old_cache.project(old_svg)
+            fallback_error = max((abs(a[k]-b[k]) for a, b in zip(fallback_measured['texts'], fallback_projected['texts'])
+                                  for k in ('x', 'y', 'width', 'height')), default=0)
+            fallback_review = assess(bind(old_svg, model, fallback_measured))
+            if fallback_error <= .03 and not (fallback_bounds['label_label_conflicts'] or fallback_bounds['label_classifier_conflicts']) and score(fallback_review) <= score(baseline_review):
+                g, svg, scene, trace, cache = old_g, old_svg, old_scene, old_trace, old_cache
+                review = fallback_review
+                selected_review = 'fallback-review'
+                routing['accepted'] = False
+            else:
+                fallback_to_original = True
+        else:
+            fallback_to_original = True
+        if fallback_to_original:
+            g, svg, scene = graph, original_svg, original_scene
+            review = baseline_review
+            selected_review = 'baseline-review'
+            routing['accepted'] = False
     (out/'diagram.svg').write_bytes(svg)
     (out/'diagram.drawio').write_bytes(export_drawio(model, scene, svg))
     verify(out/'diagram.drawio', model)
     save(out/'final-layout.json', g)
     save(out/'refinement.json', trace)
+    save(out/'routing.json', routing)
+    if route_refinement is not None:
+        save(out/'routed-refinement.json', route_refinement)
     save(out/'proximity-review.json', review)
+    geometry = route_metrics(scene)
+    save(out/'route-metrics.json', geometry)
     sharp = str(Path(args.sharp_module).resolve()) if args.sharp_module else str(core/'runtime/node_modules/sharp')
     environment = os.environ.copy()
     if args.fontconfig:
@@ -151,19 +223,26 @@ def main():
     subprocess.run([args.node, str(core/'runtime/scripts/rasterize.cjs'), sharp,
                     str(out/'diagram.svg'), str(out/'diagram.png')], check=True, capture_output=True,
                    timeout=90, env=environment)
-    result = dict(status='needs_review' if review['proximity_warnings'] else 'checks_passed',
+    result = dict(status='needs_review' if review['proximity_warnings'] or geometry['proper_crossings'] or geometry['other_contacts'] else 'checks_passed',
                   baseline_proximity_warnings=len(baseline_review['proximity_warnings']),
                   final_proximity_warnings=len(review['proximity_warnings']),
-                  fallback_to_original=fallback, cache_projection_error_px=error,
+                  fallback_to_original=fallback_to_original, fallback_from_route_proposal=fallback,
+                  selected_review=selected_review, cache_projection_error_px=error,
                   browser_measurements=browser_calls, png_exports=1,
                   initial_png_exports=prior.get('png_exports'), layout_calls=prior.get('layout_calls'),
-                  label_solves=trace['label_solves'], cache_stats=cache.stats, repairs=0,
+                  new_layout_calls=prior.get('layout_calls', 0) if args.model else 0,
+                  label_solves=label_solves, route_label_solves=routing['label_solver_calls'],
+                  routes_changed=routing['changed'], routes_accepted=routing.get('accepted', False),
+                  original_crossings=route_metrics(original_scene)['proper_crossings'],
+                  final_crossings=geometry['proper_crossings'],
+                  original_bends=route_metrics(original_scene)['bends'], final_bends=geometry['bends'],
+                  cache_stats=cache.stats, repairs=0,
                   seconds=time.perf_counter()-started,
                   source_unchanged=all(digest(Path(p)) == h for p, h in sources.items()),
                   human_readability='not_certified',
-                  scope='Optional measured native end-label refinement. Complete facts, class placement and paths retained; no crossing or width reduction is claimed. Two offline font measurements; no browser calls or PNGs during label search. With an existing generation input its previous raster work remains separate.')
+                  scope='Bounded fixed-class routing with independently switchable crossing tradeoff and prefix label sampling. Original and routed typography are measured separately; cached translations never cross a geometry change. Retain label-only output if routed measured proximity is worse. Two or three offline font measurements normally, at most four including an actual fallback check. Complete facts and class frames retained; no width or human-preference claim. One final PNG, no browser/PNG calls during searches. Prior work of a supplied generation remains separate.')
     save(out/'run.json', result)
-    (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Clean UML</title><style>body{font:16px Arial;margin:20px}img{max-width:100%}</style><a href="diagram.drawio">draw.io</a> · <a href="diagram.svg">SVG</a> · <a href="run.json">检查记录</a><p>标签距离提示：'+str(result['baseline_proximity_warnings'])+' → '+str(result['final_proximity_warnings'])+'。请检查仍有提示的关系。</p><img src="diagram.png" alt="UML 类图">', encoding='utf-8')
+    (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Clean UML</title><style>body{font:16px Arial;margin:20px}img{max-width:100%}</style><a href="diagram.drawio">draw.io</a> · <a href="diagram.svg">SVG</a> · <a href="run.json">检查记录</a><p>交叉：'+str(result['final_crossings'])+'；标签距离提示：'+str(result['final_proximity_warnings'])+'。请检查仍有提示的关系。</p><img src="diagram.png" alt="UML 类图">', encoding='utf-8')
     print(json.dumps({'output': str(out), **result}, ensure_ascii=False))
     return 0
 

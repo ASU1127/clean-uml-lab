@@ -2,7 +2,7 @@
 
 从结构化事实生成简洁、可审核的 UML 类图，输出 **SVG、PNG 和可编辑 draw.io**。可作为 agent skill 或本地 CLI 使用。
 
-本分支包含阶段 **4.4** 和可选的实测标签优化预览：原生文字自动扩框、保存后的文本重排、只导出一次最终 PNG，以及实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
+本分支包含阶段 **4.4** 核心和 **4.6 路由/标签优化预览**：原生文字自动扩框、保存后的文本重排、只导出一次最终 PNG，以及实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
 
 ![带限定符的关联](docs/images/qualified-bank.png)
 
@@ -52,13 +52,16 @@ node review_svg.cjs out/bank/diagram.svg --model out/bank/model.json --engine cl
 
 也可审核带完整同源模型的 PlantUML/Mermaid 类图 SVG，分别用 `--engine plantuml`、`--engine mermaid`。工具在独立离线浏览器中量取文字边界；无冲突为退出码 0，需要检查为 2，执行失败为 3。它检查文字边界冲突，不认证像素重叠、角色归属、业务事实或人类审美。
 
-可选一键标签优化复用上面的审核依赖：
+可选一键路由与标签优化：
 
 ```sh
-python refinement/create_uml.py examples/InviDas.json -o out/invidas-refined --puppeteer-module ./out/review-runtime/node_modules/puppeteer-core
+npm ci --prefix refinement --no-audit --no-fund
+python refinement/create_uml.py examples/InviDas.json -o out/invidas-refined
 ```
 
-它使用实测文字边界，让短多重性朝自己的连线对齐，并尝试移动有歧义风险的标签。只测量初始和最终 SVG，搜索中复用边界，最终导出一次 PNG。类框与连线不移动；失败时保留原始有效位置。`proximity-review.json` 中的距离提示需要读图确认，不代表 UML 语义错误。`--no-align`、`--no-refine`、`--no-cache-distances` 可分别消融对齐、标签移动和距离缓存。[固定案例证据](docs/measured-label-evidence.json)；复杂图过宽和交叉仍待解决。
+它保持类框和完整语义，尝试自然斜线与较少折点的连接，并优化标签。原图、新路线分别测量文字边界，再实测最终结果；通常 2–3 次，实际回退最多 4 次。搜索中不调用浏览器、不导出 PNG，最终 PNG 只导出一次。路线变好却增加标签距离提示时，保留标签优化后的原路线。`--no-routes`、`--no-prefix-routing`、`--no-crossing-tradeoff` 可分别消融路由、路径前缀和交叉取舍；原有标签消融开关保留。
+
+六个已有完整输入的 24 组路由实验均通过原生导出检查；租赁图折点 4→1，32 类履约图 8→2，实测标签距离提示分别 2→1、3→2。履约图仍有两处交叉。冻结算法后生成的两个人工合成输入保留全部事实；32 类输入的一个候选虽把交叉 3→1，却增加了标签距离提示，被单次命令拒绝，最终仍为三处交叉。[路由证据](docs/route-evidence.json) · [标签证据](docs/measured-label-evidence.json)。这些不是人类审美或独立大模型 skill 的盲测证明，复杂图宽度仍待改进。
 
 ## 验证与边界
 
@@ -89,3 +92,5 @@ python verify_semantics.py out/semantic-probes
 [可编辑工业例图](docs/images/InviDas.drawio) · [SVG](docs/images/InviDas.svg) · [中文小例子](docs/images/team.png)
 
 [标签优化后的 InviDas SVG](docs/images/InviDas-refined.svg) · [对应 draw.io](docs/images/InviDas-refined.drawio)
+
+[路由与标签优化后的 InviDas](docs/images/InviDas-routed.png) · [SVG](docs/images/InviDas-routed.svg) · [draw.io](docs/images/InviDas-routed.drawio)。该图修改了连线与标签位置，模型事实保留；继续按上述作者署名与 CC BY 4.0 许可使用。
