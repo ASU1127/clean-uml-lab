@@ -26,7 +26,11 @@ def verify(path,model):
             if side+'_qualifier' in r:
                 qid=eid+'_qualifier_'+side;q=cells[qid]
                 assert q.get('value')==r[side+'_qualifier']['name']
-                assert q.get('parent')==expected and q.get('cleanUmlAssociation')==eid and q.get('cleanUmlEnd')==side
+                if q.get('parent')!=expected:
+                    anchor=cells[q.get('parent')]
+                    assert anchor.get('parent')==expected and anchor.get('cleanUmlQualifierAnchor')==qid
+                    assert anchor.find('mxGeometry').get('relative')=='1'
+                assert q.get('cleanUmlClassifier')==expected and q.get('cleanUmlAssociation')==eid and q.get('cleanUmlEnd')==side
                 assert e.get('cleanUml'+side.title())==expected
                 expected=qid
             assert e.get(side)==expected

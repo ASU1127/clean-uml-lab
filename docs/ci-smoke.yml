@@ -16,42 +16,70 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       PYTHONUTF8: '1'
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.12'
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Install pinned local runtime
-        run: npm install --prefix runtime --no-audit --no-fund
-      - name: Check text measurement and layout dependencies
+      - name: Install Chinese fonts on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -qq && sudo apt-get install -y fonts-noto-cjk
+      - name: Install pinned runtime in fresh checkout
+        run: npm ci --prefix runtime --no-audit --no-fund
+      - name: Check local dependency measurement and layout
         run: python runtime/scripts/doctor.py
-      - name: Verify semantics and qualifier notation
+      - name: Check semantic and qualifier invariants
         run: python verify_semantics.py out/semantic-probes
       - name: Generate requirement-checked diagram
         run: python prototype.py examples/team.json --requirements examples/team.requirements.json -o out/team
       - name: Generate qualified association
         run: python prototype.py examples/qualified-bank.json --root Bank -o out/bank
-      - name: Check editable exports
+      - name: Generate industrial class diagram
+        run: python prototype.py examples/InviDas.json -o out/invidas
+      - name: Import saved native file and reflow
+        run: python reflow.py out/bank/diagram.drawio --model out/bank/model.json -o out/bank-reflow
+      - name: Verify complete exports and final-only rasterization
         shell: python
         run: |
           import json, sys
           from pathlib import Path
           sys.path.insert(0, str(Path('runtime/scripts').resolve()))
           from check_exports import verify
-          for name, model in [('team', 'team'), ('bank', 'qualified-bank')]:
+          for name in ('team', 'bank', 'invidas', 'bank-reflow'):
               folder = Path('out') / name
               result = json.loads((folder / 'run.json').read_text(encoding='utf-8'))
               assert result['selected_valid'], result
-              facts = json.loads((Path('examples') / (model + '.json')).read_text(encoding='utf-8'))
-              print(verify(folder / 'diagram.drawio', facts))
+              assert result['png_exports'] == 1, result
+              assert result['candidate_pngs_inside_search'] == 0, result
+              facts = json.loads((folder / 'model.json').read_text(encoding='utf-8'))
+              print(name, verify(folder / 'diagram.drawio', facts))
               for suffix in ('svg', 'png', 'drawio'):
                   assert (folder / ('diagram.' + suffix)).stat().st_size > 0
+      - name: Install optional reviewer in fresh directory
+        if: runner.os == 'Windows'
+        run: npm install --prefix out/review-runtime puppeteer-core@25.10.0 --no-audit --no-fund
+      - name: Measure generated SVG with isolated offline browser
+        if: runner.os == 'Windows'
+        run: node review_svg.cjs out/team/diagram.svg --model out/team/model.json --engine clean --output out/team-review --puppeteer-module ./out/review-runtime/node_modules/puppeteer-core
+      - name: Save generated diagrams and audit records
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: diagram-smoke-${{ matrix.os }}
+          path: |
+            out/*/diagram.svg
+            out/*/diagram.png
+            out/*/diagram.drawio
+            out/*/run.json
+            out/*/review.json
+            out/*/model.json
+          if-no-files-found: warn

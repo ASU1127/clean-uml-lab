@@ -40,8 +40,9 @@ def run(args):
     configure_path_cache(not getattr(args,'no_path_cache',False))
     if out.exists():raise ValueError('Output directory already exists; choose a new directory')
     out.mkdir(parents=True)
-    model=json.loads(Path(args.model).read_text(encoding='utf-8-sig'));ir=build(model);save(out/'layout-ir.json',ir)
-    (out/'original-model.json').write_bytes(Path(args.model).read_bytes())
+    source_bytes=(json.dumps(args.input_model,ensure_ascii=False,indent=2).encode('utf-8') if getattr(args,'input_model',None) is not None else Path(args.model).read_bytes())
+    model=json.loads(source_bytes.decode('utf-8-sig'));ir=build(model);save(out/'layout-ir.json',ir)
+    (out/'original-model.json').write_bytes(source_bytes)
     if 'input_bindings' in ir:save(out/'type-binding-audit.json',ir['input_bindings'])
     if 'input_namespaces' in ir:save(out/'namespace-audit.json',ir['input_namespaces'])
     save(out/'model.json',ir['facts'])
@@ -60,7 +61,7 @@ def run(args):
         subprocess.run([args.node,str(RUNTIME/'scripts'/script),*map(str,values)],check=True,capture_output=True,env=env,timeout=90)
         if script=='layout.cjs':layout_cache[cache_key]=Path(values[2]).read_bytes()
     baseline=out/'baseline'
-    bargs=argparse.Namespace(model=str(out/'model.json'),output=str(baseline),root=args.root,requirements=getattr(args,'requirements',None),node=args.node,sharp_module=sharp,elk_module=elk,fontconfig=args.fontconfig,rank_policy='uniform',compact_auxiliary=False,no_compact_bands=False,no_joint_straight=False,reuse_marker_scene=not getattr(args,'no_marker_cache',False))
+    bargs=argparse.Namespace(model=str(out/'model.json'),output=str(baseline),root=args.root,requirements=getattr(args,'requirements',None),node=args.node,sharp_module=sharp,elk_module=elk,fontconfig=args.fontconfig,rank_policy='uniform',compact_auxiliary=False,no_compact_bands=False,no_joint_straight=False,reuse_marker_scene=not getattr(args,'no_marker_cache',False),render_png=False)
     br=generate(bargs)
     model=json.loads((baseline/'model.json').read_text(encoding='utf-8-sig'));metrics=json.loads((baseline/'metrics.json').read_text(encoding='utf-8-sig'))
     baseline_metrics=json.loads((baseline/'route-metrics.json').read_text(encoding='utf-8-sig'))
@@ -71,14 +72,16 @@ def run(args):
     independent_enums=[n['id']for n in model['nodes']if n['kind']=='enum'and n['id']not in incident]
     balanced=bool(independent_enums)and not getattr(args,'no_balanced',False)
     arms=('compact-global','spread-global')+(('balanced-global',)if balanced else())+(('intrinsic-global',) if getattr(args,'research_intrinsic',False) else ())+(('regions','regions-reversed','coarse','spine') if getattr(args,'research_regions',False) else ())
+    arms=list(arms)
     for arm in arms:
+        if arm=='qualifier-clearance' and any(r['valid'] for r in rows):continue
         folder=out/arm;folder.mkdir()
         try:
             g=tree_graph(model,metrics,routing='ORTHOGONAL',root=args.root,sized=arm!='intrinsic-global')
-            if arm in ('compact-global','spread-global','balanced-global','intrinsic-global'):
+            if arm in ('compact-global','spread-global','balanced-global','intrinsic-global','qualifier-clearance'):
                 from coarse_layout import propose
                 from region_partition import propose as partition
-                t,_=propose(model,g,partition(ir,'singletons'),folder,node,elk,label_aware=True,route_all=True,corner_routes=True,tight_regions=True,compact_spacing=True,root=args.root,spread_ports=arm in('spread-global','balanced-global'),component_pack=arm=='balanced-global'and not getattr(args,'no_component_packing',False),center_sources=arm=='balanced-global'and not getattr(args,'no_source_centering',False))
+                t,_=propose(model,g,partition(ir,'singletons'),folder,node,elk,label_aware=True,route_all=True,corner_routes=True,tight_regions=True,compact_spacing=True,root=args.root,spread_ports=arm in('spread-global','balanced-global','qualifier-clearance'),component_pack=arm=='balanced-global'and not getattr(args,'no_component_packing',False),center_sources=arm=='balanced-global'and not getattr(args,'no_source_centering',False),qualifier_gap=arm=='qualifier-clearance')
             elif arm in ('coarse','spine'):
                 from coarse_layout import propose
                 t,_=propose(model,g,ir,folder,node,elk,label_aware=True,route_all=True,corner_routes=True,spine=arm=='spine',root=args.root)
@@ -100,10 +103,11 @@ def run(args):
             hierarchy=all(scene['nodes'][r['target']]['y']+scene['nodes'][r['target']]['height']<scene['nodes'][r['source']]['y'] for r in model['relations'] if r['kind'] in ('generalization','realization'))
             (folder/'diagram.svg').write_bytes(svg);(folder/'diagram.drawio').write_bytes(export_drawio(model,scene,svg));save(folder/'final-layout.json',t);save(folder/'route-metrics.json',rm)
             save(folder/'audit.json',dict(geometry=audit,markers=markers,labels_solved=solved,hierarchy=hierarchy))
-            node('rasterize.cjs',sharp,folder/'diagram.svg',folder/'diagram.png')
             rows.append(dict(candidate=arm,metrics=rm,valid=solved and hierarchy and not audit['findings'] and not markers,status='audited'))
         except (ValueError,AssertionError,subprocess.SubprocessError,KeyError,ZeroDivisionError) as error:
             save(folder/'failure.json',dict(error=str(error)));rows.append(dict(candidate=arm,valid=False,status='failed',error=str(error)))
+        if arm==arms[-1] and 'qualifier-clearance' not in arms and not getattr(args,'no_qualifier_clearance',False) and not any(r['valid'] for r in rows) and any(side+'_qualifier' in r for r in model['relations'] for side in ('source','target')):
+            arms.append('qualifier-clearance')
     # Valid notation is required before geometry can rank usable candidates.
     # Preserve conservative dominance when the baseline itself passes its gates.
     keys=('proper_crossings','other_contacts','shared_track_length','bends','route_length','area')
@@ -111,13 +115,22 @@ def run(args):
     eligible=[r for r in rows if r['valid'] and (not baseline_valid or all(r['metrics'][k]<=baseline_metrics[k] for k in keys))]
     winner=min(eligible,key=lambda r:tuple(r['metrics'][k] for k in keys)) if eligible else rows[0]
     selected=out/winner['candidate']
-    for filename in ('diagram.svg','diagram.png','diagram.drawio'):shutil.copyfile(selected/filename,out/filename)
-    save(out/'run.json',dict(stage='4.2 phase product: explicit namespace, visibility, ordering and qualifier notation',selected=winner['candidate'],selected_valid=winner['valid'],root=args.root,research_regions=getattr(args,'research_regions',False),research_intrinsic=getattr(args,'research_intrinsic',False),independent_enums=independent_enums,balance=dict(candidate_enabled=balanced,component_packing=balanced and not getattr(args,'no_component_packing',False),source_centering=balanced and not getattr(args,'no_source_centering',False)),candidates=rows,layout_calls=br['layout_calls']+extra_layout_calls,seconds=time.perf_counter()-start,semantic_regions=ir['diagnostics'],scope='Baseline plus compact and spread routing; balanced packing/centering candidate only when declared enums are disconnected. Complete label-feasible non-loop routing. Width and region hypotheses are opt-in research. Global permutation search is not implemented.',selection=dict(baseline_valid=baseline_valid,policy='Strict geometry dominance over a valid baseline; otherwise choose the best passing candidate',geometry_delta_from_baseline={k:round(winner.get('metrics',baseline_metrics)[k]-baseline_metrics[k],2) for k in keys}),fallback='Invalid baseline is diagnostic only when a valid candidate exists; report failure if every candidate fails',human_readability='not_certified'))
+    for filename in ('diagram.svg','diagram.drawio'):shutil.copyfile(selected/filename,out/filename)
+    # Vector audits decide first. The normal path rasterizes exactly one winner.
+    node('rasterize.cjs',sharp,out/'diagram.svg',out/'diagram.png')
+    png_exports=1
+    if getattr(args,'candidate_previews',False):
+        for row in rows:
+            folder=out/row['candidate']
+            if not (folder/'diagram.svg').exists():continue
+            if folder==selected:shutil.copyfile(out/'diagram.png',folder/'diagram.png')
+            else:node('rasterize.cjs',sharp,folder/'diagram.svg',folder/'diagram.png');png_exports+=1
+    save(out/'run.json',dict(stage='4.4 phase product: one selected raster and optional rendered text review',png_exports=png_exports,candidate_previews=getattr(args,'candidate_previews',False),candidate_pngs_inside_search=0,selected=winner['candidate'],selected_valid=winner['valid'],root=args.root,research_regions=getattr(args,'research_regions',False),research_intrinsic=getattr(args,'research_intrinsic',False),independent_enums=independent_enums,balance=dict(candidate_enabled=balanced,component_packing=balanced and not getattr(args,'no_component_packing',False),source_centering=balanced and not getattr(args,'no_source_centering',False)),candidates=rows,layout_calls=br['layout_calls']+extra_layout_calls,seconds=time.perf_counter()-start,semantic_regions=ir['diagnostics'],scope='Baseline plus compact and spread routing; balanced packing/centering candidate only when declared enums are disconnected. A measured qualifier-clearance candidate is added only if all preceding candidates fail. Complete label-feasible non-loop routing. Width and region hypotheses are opt-in research. Global permutation search is not implemented.',selection=dict(baseline_valid=baseline_valid,policy='Strict geometry dominance over a valid baseline; otherwise choose the best passing candidate',geometry_delta_from_baseline={k:round(winner.get('metrics',baseline_metrics)[k]-baseline_metrics[k],2) for k in keys}),fallback='Invalid baseline is diagnostic only when a valid candidate exists; report failure if every candidate fails',human_readability='not_certified'))
     import html
-    cards=''.join(f'<section><h2>{r["candidate"]} · {r["status"]} · valid={r["valid"]}</h2><a href="{r["candidate"]}/diagram.drawio">draw.io</a><img src="{r["candidate"]}/diagram.png"></section>' if (out/r['candidate']/'diagram.png').exists() else f'<section><h2>{r["candidate"]} · failed</h2><p>{html.escape(r.get("error",""))}</p><a href="{r["candidate"]}/failure.json">失败诊断</a></section>' for r in rows)
-    (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Clean UML 阶段原型</title><style>body{font:16px Arial;margin:24px}img{max-width:100%;display:block}section{border-top:1px solid #aaa;margin-top:24px}</style><h1>Clean UML · 区域架构原型</h1><p>选择：'+winner['candidate']+'。候选可能不通过审查；不等于正式质量验收。</p><a href="diagram.drawio">选中图 draw.io</a> · <a href="run.json">完整结果</a>'+cards,encoding='utf-8')
+    cards=''.join(f'<section><h2>{r["candidate"]} · {r["status"]} · valid={r["valid"]}</h2><a href="{r["candidate"]}/diagram.drawio">draw.io</a><img src="{r["candidate"]}/diagram.svg" loading="lazy"></section>' if (out/r['candidate']/'diagram.svg').exists() else f'<section><h2>{r["candidate"]} · failed</h2><p>{html.escape(r.get("error",""))}</p><a href="{r["candidate"]}/failure.json">失败诊断</a></section>' for r in rows)
+    (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Clean UML 阶段原型</title><style>body{font:16px Arial;margin:24px}img{max-width:100%;display:block}section{border-top:1px solid #aaa;margin-top:24px}</style><h1>Clean UML</h1><p>选择：'+winner['candidate']+'。请检查复杂关系与标签归属。</p><a href="diagram.drawio">draw.io</a> · <a href="diagram.svg">SVG</a> · <a href="diagram.png">PNG</a> · <a href="run.json">检查记录</a><img src="diagram.png" alt="选中类图"><details><summary>候选与诊断</summary>'+cards+'</details>',encoding='utf-8')
     print(json.dumps(dict(output=str(out),selected=winner['candidate'],selected_valid=winner['valid'],candidates=[(r['candidate'],r['valid']) for r in rows]),ensure_ascii=False))
     return winner['valid']
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('model');p.add_argument('-o','--output',required=True);p.add_argument('--root');p.add_argument('--requirements');p.add_argument('--research-regions',action='store_true');p.add_argument('--research-intrinsic',action='store_true');p.add_argument('--no-balanced',action='store_true');p.add_argument('--no-component-packing',action='store_true');p.add_argument('--no-source-centering',action='store_true');p.add_argument('--no-marker-cache',action='store_true',help='Ablate exact label-only renderer reuse');p.add_argument('--no-path-cache',action='store_true',help='Ablate bounded exact SVG path sampling cache');p.add_argument('--node',default='node');p.add_argument('--sharp-module');p.add_argument('--elk-module');p.add_argument('--fontconfig');sys.exit(0 if run(p.parse_args()) else 2)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('model');p.add_argument('-o','--output',required=True);p.add_argument('--root');p.add_argument('--requirements');p.add_argument('--candidate-previews',action='store_true',help='Render candidate PNGs only after selection for optional inspection/ablation');p.add_argument('--research-regions',action='store_true');p.add_argument('--research-intrinsic',action='store_true');p.add_argument('--no-balanced',action='store_true');p.add_argument('--no-component-packing',action='store_true');p.add_argument('--no-source-centering',action='store_true');p.add_argument('--no-qualifier-clearance',action='store_true',help='Ablate the measured qualifier-spacing fallback');p.add_argument('--no-marker-cache',action='store_true',help='Ablate exact label-only renderer reuse');p.add_argument('--no-path-cache',action='store_true',help='Ablate bounded exact SVG path sampling cache');p.add_argument('--node',default='node');p.add_argument('--sharp-module');p.add_argument('--elk-module');p.add_argument('--fontconfig');sys.exit(0 if run(p.parse_args()) else 2)
