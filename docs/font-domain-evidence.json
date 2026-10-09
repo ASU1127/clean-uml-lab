@@ -1,0 +1,178 @@
+{
+  "stage": "4.8 measured label-position domains",
+  "domain_factorial": {
+    "scenes": 8,
+    "distinct_models": 7,
+    "arms": 32,
+    "all_native_and_geometry_passed": true,
+    "browser_measurements": 16,
+    "actual_final_measurements": 8,
+    "other_arms_use_exact_translation_projection": true,
+    "common_label_solves": 24,
+    "repairs": 0,
+    "development_probes_before_factorial": 2,
+    "warnings_by_arm": {
+      "rental": {
+        "control": 0,
+        "measured": 0,
+        "dense": 0,
+        "full": 0
+      },
+      "fulfillment": {
+        "control": 1,
+        "measured": 1,
+        "dense": 1,
+        "full": 1
+      },
+      "InviDas": {
+        "control": 0,
+        "measured": 0,
+        "dense": 0,
+        "full": 0
+      },
+      "modular-22": {
+        "control": 0,
+        "measured": 0,
+        "dense": 0,
+        "full": 0
+      },
+      "modular-32": {
+        "control": 5,
+        "measured": 5,
+        "dense": 5,
+        "full": 4
+      },
+      "modular-32-route": {
+        "control": 4,
+        "measured": 4,
+        "dense": 4,
+        "full": 4
+      },
+      "team": {
+        "control": 0,
+        "measured": 0,
+        "dense": 0,
+        "full": 0
+      },
+      "qualified-bank": {
+        "control": 0,
+        "measured": 0,
+        "dense": 0,
+        "full": 0
+      }
+    }
+  },
+  "integration_first_batch": {
+    "commands": 10,
+    "all_commands_exited_zero": true,
+    "all_pairs_non_regressing": false,
+    "rejected_regression": "Fulfillment returned from 2 to 8 bends after label-only improvement changed admission.",
+    "new_layout_calls": 30,
+    "browser_measurements": 30,
+    "pngs": 10,
+    "repairs_inside_batch": 0
+  },
+  "corrected_validation": {
+    "commands": 5,
+    "full_first_call_generations": 2,
+    "existing_generation_refinements": 3,
+    "all_supplied_facts_and_native_exports_passed": true,
+    "all_pairs_non_regressing": true,
+    "new_layout_calls": 6,
+    "browser_measurements": 15,
+    "pngs": 5,
+    "prior_policy_repairs": 1,
+    "repairs_inside_batch": 0,
+    "rows": [
+      {
+        "case": "rental",
+        "status": "checks_passed",
+        "old_crossings": 0,
+        "final_crossings": 0,
+        "old_bends": 1,
+        "final_bends": 1,
+        "old_warnings": 1,
+        "final_proximity_warnings": 0
+      },
+      {
+        "case": "fulfillment",
+        "status": "needs_review",
+        "old_crossings": 2,
+        "final_crossings": 2,
+        "old_bends": 2,
+        "final_bends": 2,
+        "old_warnings": 2,
+        "final_proximity_warnings": 1
+      },
+      {
+        "case": "modular-32",
+        "status": "needs_review",
+        "old_crossings": 3,
+        "final_crossings": 1,
+        "old_bends": 3,
+        "final_bends": 2,
+        "old_warnings": 5,
+        "final_proximity_warnings": 4
+      },
+      {
+        "case": "seeded-28",
+        "status": "needs_review",
+        "old_crossings": 2,
+        "final_crossings": 2,
+        "old_bends": 1,
+        "final_bends": 1,
+        "old_warnings": 1,
+        "final_proximity_warnings": 0
+      },
+      {
+        "case": "seeded-35",
+        "status": "needs_review",
+        "old_crossings": 0,
+        "final_crossings": 0,
+        "old_bends": 4,
+        "final_bends": 4,
+        "old_warnings": 3,
+        "final_proximity_warnings": 0
+      }
+    ]
+  },
+  "fixed_competitor_comparison": {
+    "case": "Same complete modular-32 facts",
+    "frozen_versions": {
+      "mermaid": "12.1.0",
+      "mermaid_cli": "12.0.0",
+      "plantuml": "1.2026.6",
+      "plantuml_sha256": "e620ae095a2ba0134d3c33fd5ae34ff01e785f3df1796c0898802b8761a033a8"
+    },
+    "competitors": [
+      {
+        "engine": "plantuml",
+        "crossings": 5,
+        "label_label_conflicts": 15,
+        "label_classifier_conflicts": 0,
+        "width": 3143,
+        "height": 683,
+        "longest_route": 1571.2030322824457
+      },
+      {
+        "engine": "mermaid",
+        "crossings": 3,
+        "label_label_conflicts": 0,
+        "label_classifier_conflicts": 0,
+        "width": 3536.74609375,
+        "height": 1471,
+        "longest_route": 1785.2765949867044
+      }
+    ],
+    "clean_crossings": 1,
+    "clean_label_bounds_conflicts": 0,
+    "source_model_sha256": "738e604e612728384adb978791f104f416593e50ff5f5dee1e8bf7c07753ba25",
+    "scope": "Previously rendered strong fixed controls reused; no new competitor runs or all-tools win. Clean width remains 3880 px, larger than both controls."
+  },
+  "negative_width_factorial": {
+    "arms": 24,
+    "promoted": false,
+    "reason": "Measured summed widths and fixed MIN_WIDTH layering did not provide stable geometry or label gains."
+  },
+  "limitations": "Known-case engineering evidence and a reused synthetic family. Seeds from the first integration batch are now known in corrected validation. Some final diagrams still need review for crossings, proximity or contacts. No independent skill blind test, human preference, full desktop GUI or fresh-machine certification."
+}

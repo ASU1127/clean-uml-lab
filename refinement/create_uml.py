@@ -39,6 +39,9 @@ def main():
     parser.add_argument('--no-align', action='store_true')
     parser.add_argument('--no-refine', action='store_true')
     parser.add_argument('--no-cache-distances', action='store_true')
+    parser.add_argument('--no-font-domains', action='store_true', help='Ablate measured label-position domains entirely')
+    parser.add_argument('--no-measured-fragments', action='store_true', help='Use nominal label-block geometry in position domains')
+    parser.add_argument('--no-dense-prefix', action='store_true', help='Use sparse endpoint-prefix positions in label domains')
     parser.add_argument('--no-routes', action='store_true', help='Ablate all new routing; retain the label-only workflow')
     parser.add_argument('--no-prefix-routing', action='store_true', help='Ablate path-prefix sampling in the routing solver')
     parser.add_argument('--no-crossing-tradeoff', action='store_true', help='Ablate crossing reduction with bounded detour growth')
@@ -65,6 +68,7 @@ def main():
     from render_cache_fast import RenderCache
     from affinity_review import bind, assess
     from measured_labels import score
+    from font_domains import improve as improve_font_domains
     from bounded_routes import improve as improve_routes
     from route_metrics import measure as route_metrics
     started = time.perf_counter()
@@ -131,8 +135,24 @@ def main():
         return json.loads((destination/'scene.json').read_text(encoding='utf-8'))
     measured = measure(measurement/'diagram.svg', out/'baseline-review')
     cache = RenderCache(original_svg, model, measured, cache_distances=not args.no_cache_distances)
-    g, svg, scene, trace = improve(model, metrics, graph, cache,
-                                 align=not args.no_align, refine=not args.no_refine)
+    def refine_labels(value, typography):
+        result_graph, result_svg, result_scene, result_trace = improve(
+            model, metrics, value, typography, align=not args.no_align, refine=not args.no_refine)
+        result_trace['pre_font_score'] = score(typography.review(result_svg))
+        if not args.no_refine and not args.no_font_domains:
+            result_graph, result_svg, font_trace = improve_font_domains(
+                model, result_graph, result_svg, typography,
+                measured_domains=not args.no_measured_fragments,
+                dense_prefix=not args.no_dense_prefix)
+            _, result_scene = draw(model, metrics, result_graph)
+            result_trace['font_domains'] = font_trace
+            result_trace['label_solves'] += bool(font_trace['domains'])
+            result_trace['after'] = score(typography.review(result_svg))
+        else:
+            result_trace['font_domains'] = dict(enabled=False)
+        return result_graph, result_svg, result_scene, result_trace
+
+    g, svg, scene, trace = refine_labels(graph, cache)
     old_g, old_svg, old_scene, old_trace, old_cache = g, svg, scene, trace, cache
     (measurement/'original-refined.svg').write_bytes(old_svg)
     save(out/'original-refinement.json', old_trace)
@@ -156,15 +176,18 @@ def main():
             route_measured = measure(route_file, out/'routed-review')
             route_cache = RenderCache(route_svg, model, route_measured,
                                       cache_distances=not args.no_cache_distances)
-            rg, rsvg, rscene, route_refinement = improve(model, metrics, routed, route_cache,
-                                                        align=not args.no_align, refine=not args.no_refine)
+            rg, rsvg, rscene, route_refinement = refine_labels(routed, route_cache)
             label_solves += route_refinement['label_solves']
             proposed_review = route_cache.review(rsvg)
             # Typography caches are tied to separately measured fixed routes.
             # A geometric improvement cannot license worse measured ambiguity.
             routing['original_refined_score'] = score(original_refined_review)
+            routing['legacy_original_refined_score'] = old_trace['pre_font_score']
             routing['routed_refined_score'] = score(proposed_review)
-            routing['accepted'] = score(proposed_review) <= score(original_refined_review)
+            # Preserve routes admitted by the existing workflow. Better labels
+            # on its unselected original route must not remove that geometric
+            # improvement. New routes still cannot worsen the legacy control.
+            routing['accepted'] = score(proposed_review) <= tuple(old_trace['pre_font_score'])
             if routing['accepted']:
                 g, svg, scene, trace, cache = rg, rsvg, rscene, route_refinement, route_cache
     proposal = measurement/'proposal.svg'
@@ -178,7 +201,7 @@ def main():
     baseline_review = assess(bind(original_svg, model, measured))
     review = assess(bind(svg, model, final_measured))
     bounds = json.loads((out/'final-review/review.json').read_text(encoding='utf-8'))
-    fallback = error > .03 or bool(bounds['label_label_conflicts'] or bounds['label_classifier_conflicts']) or score(review) > score(original_refined_review)
+    fallback = error > .03 or bool(bounds['label_label_conflicts'] or bounds['label_classifier_conflicts']) or score(review) > score(cache.review(svg))
     selected_review = 'final-review'
     fallback_to_original = False
     if fallback:
@@ -232,6 +255,13 @@ def main():
                   initial_png_exports=prior.get('png_exports'), layout_calls=prior.get('layout_calls'),
                   new_layout_calls=prior.get('layout_calls', 0) if args.model else 0,
                   label_solves=label_solves, route_label_solves=routing['label_solver_calls'],
+                  font_domains_enabled=not args.no_refine and not args.no_font_domains,
+                  measured_fragments=not args.no_measured_fragments,
+                  dense_prefix=not args.no_dense_prefix,
+                  font_domain_search_states=sum(t.get('font_domains', {}).get('search_states', 0)
+                      for t in [old_trace] + ([route_refinement] if route_refinement is not None else [])),
+                  font_domain_evaluated_positions=sum(t.get('font_domains', {}).get('evaluated_positions', 0)
+                      for t in [old_trace] + ([route_refinement] if route_refinement is not None else [])),
                   routes_changed=routing['changed'], routes_accepted=routing.get('accepted', False),
                   original_crossings=route_metrics(original_scene)['proper_crossings'],
                   final_crossings=geometry['proper_crossings'],

@@ -1,0 +1,590 @@
+{
+  "nodes": [
+    {
+      "id": "entry_0_0",
+      "name": "Entry0_0",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_0_1",
+      "name": "Entry0_1",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_0_2",
+      "name": "Entry0_2",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_0_3",
+      "name": "Entry0_3",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_1_0",
+      "name": "Entry1_0",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_1_1",
+      "name": "Entry1_1",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_1_2",
+      "name": "Entry1_2",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_1_3",
+      "name": "Entry1_3",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_2_0",
+      "name": "Entry2_0",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_2_1",
+      "name": "Entry2_1",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_2_2",
+      "name": "Entry2_2",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_2_3",
+      "name": "Entry2_3",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_3_0",
+      "name": "Entry3_0",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_3_1",
+      "name": "Entry3_1",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_3_2",
+      "name": "Entry3_2",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_3_3",
+      "name": "Entry3_3",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_4_0",
+      "name": "Entry4_0",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_4_1",
+      "name": "Entry4_1",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_4_2",
+      "name": "Entry4_2",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "entry_4_3",
+      "name": "Entry4_3",
+      "kind": "class",
+      "members": [
+        "-key : String",
+        "+read() : String"
+      ]
+    },
+    {
+      "id": "local_store",
+      "name": "LocalStore",
+      "kind": "class",
+      "members": [
+        "-path : String"
+      ]
+    },
+    {
+      "id": "module_0",
+      "name": "Module0",
+      "kind": "class",
+      "members": [
+        "-version : int"
+      ]
+    },
+    {
+      "id": "module_1",
+      "name": "Module1",
+      "kind": "class",
+      "members": [
+        "-version : int"
+      ]
+    },
+    {
+      "id": "module_2",
+      "name": "Module2",
+      "kind": "class",
+      "members": [
+        "-version : int"
+      ]
+    },
+    {
+      "id": "module_3",
+      "name": "Module3",
+      "kind": "class",
+      "members": [
+        "-version : int"
+      ]
+    },
+    {
+      "id": "module_4",
+      "name": "Module4",
+      "kind": "class",
+      "members": [
+        "-version : int"
+      ]
+    },
+    {
+      "id": "read_task",
+      "name": "ReadTask",
+      "kind": "class",
+      "members": [
+        "-timeout : int"
+      ]
+    },
+    {
+      "id": "remote_store",
+      "name": "RemoteStore",
+      "kind": "class",
+      "members": [
+        "-url : String"
+      ]
+    },
+    {
+      "id": "store",
+      "name": "Store",
+      "kind": "interface",
+      "members": [
+        "+save(key : String) : void"
+      ]
+    },
+    {
+      "id": "task",
+      "name": "Task",
+      "kind": "abstract",
+      "members": [
+        "+execute() : boolean"
+      ]
+    },
+    {
+      "id": "workspace",
+      "name": "Workspace 工作空间",
+      "kind": "class",
+      "members": [
+        "-id : String",
+        "+close() : boolean"
+      ]
+    },
+    {
+      "id": "write_task",
+      "name": "WriteTask",
+      "kind": "class",
+      "members": [
+        "-retries : int"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "kind": "association",
+      "source": "entry_0_2",
+      "target": "entry_1_0",
+      "source_role": "origin0",
+      "target_role": "reference0",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "entry_1_0",
+      "target": "entry_2_2",
+      "source_role": "origin1",
+      "target_role": "reference1",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "entry_2_1",
+      "target": "entry_3_3",
+      "source_role": "origin2",
+      "target_role": "reference2",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "entry_3_2",
+      "target": "entry_4_2",
+      "source_role": "origin3",
+      "target_role": "reference3",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "association",
+      "source": "entry_4_1",
+      "target": "entry_0_1",
+      "source_role": "origin4",
+      "target_role": "reference4",
+      "source_multiplicity": "0..*",
+      "target_multiplicity": "0..1",
+      "navigability": "->"
+    },
+    {
+      "kind": "composition",
+      "source": "module_0",
+      "target": "entry_0_0",
+      "source_role": "owner",
+      "target_role": "entries0",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_0",
+      "target": "entry_0_1",
+      "source_role": "owner",
+      "target_role": "entries1",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_0",
+      "target": "entry_0_2",
+      "source_role": "owner",
+      "target_role": "entries2",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_0",
+      "target": "entry_0_3",
+      "source_role": "owner",
+      "target_role": "entries3",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_1",
+      "target": "entry_1_0",
+      "source_role": "owner",
+      "target_role": "entries0",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_1",
+      "target": "entry_1_1",
+      "source_role": "owner",
+      "target_role": "entries1",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_1",
+      "target": "entry_1_2",
+      "source_role": "owner",
+      "target_role": "entries2",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_1",
+      "target": "entry_1_3",
+      "source_role": "owner",
+      "target_role": "entries3",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_2",
+      "target": "entry_2_0",
+      "source_role": "owner",
+      "target_role": "entries0",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_2",
+      "target": "entry_2_1",
+      "source_role": "owner",
+      "target_role": "entries1",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_2",
+      "target": "entry_2_2",
+      "source_role": "owner",
+      "target_role": "entries2",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_2",
+      "target": "entry_2_3",
+      "source_role": "owner",
+      "target_role": "entries3",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_3",
+      "target": "entry_3_0",
+      "source_role": "owner",
+      "target_role": "entries0",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_3",
+      "target": "entry_3_1",
+      "source_role": "owner",
+      "target_role": "entries1",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_3",
+      "target": "entry_3_2",
+      "source_role": "owner",
+      "target_role": "entries2",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_3",
+      "target": "entry_3_3",
+      "source_role": "owner",
+      "target_role": "entries3",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_4",
+      "target": "entry_4_0",
+      "source_role": "owner",
+      "target_role": "entries0",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_4",
+      "target": "entry_4_1",
+      "source_role": "owner",
+      "target_role": "entries1",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_4",
+      "target": "entry_4_2",
+      "source_role": "owner",
+      "target_role": "entries2",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "module_4",
+      "target": "entry_4_3",
+      "source_role": "owner",
+      "target_role": "entries3",
+      "source_multiplicity": "1",
+      "target_multiplicity": "0..*"
+    },
+    {
+      "kind": "composition",
+      "source": "workspace",
+      "target": "module_0",
+      "source_role": "workspace",
+      "target_role": "modules0",
+      "source_multiplicity": "1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "kind": "composition",
+      "source": "workspace",
+      "target": "module_1",
+      "source_role": "workspace",
+      "target_role": "modules1",
+      "source_multiplicity": "1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "kind": "composition",
+      "source": "workspace",
+      "target": "module_2",
+      "source_role": "workspace",
+      "target_role": "modules2",
+      "source_multiplicity": "1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "kind": "composition",
+      "source": "workspace",
+      "target": "module_3",
+      "source_role": "workspace",
+      "target_role": "modules3",
+      "source_multiplicity": "1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "kind": "composition",
+      "source": "workspace",
+      "target": "module_4",
+      "source_role": "workspace",
+      "target_role": "modules4",
+      "source_multiplicity": "1",
+      "target_multiplicity": "1..*"
+    },
+    {
+      "kind": "dependency",
+      "source": "task",
+      "target": "store",
+      "label": "persists"
+    },
+    {
+      "kind": "dependency",
+      "source": "workspace",
+      "target": "task",
+      "label": "schedules"
+    },
+    {
+      "kind": "generalization",
+      "source": "read_task",
+      "target": "task"
+    },
+    {
+      "kind": "generalization",
+      "source": "write_task",
+      "target": "task"
+    },
+    {
+      "kind": "realization",
+      "source": "local_store",
+      "target": "store"
+    },
+    {
+      "kind": "realization",
+      "source": "remote_store",
+      "target": "store"
+    }
+  ]
+}
