@@ -68,9 +68,21 @@ npm ci --prefix refinement --no-audit --no-fund
 python refinement/create_uml.py examples/InviDas.json -o out/invidas-refined
 ```
 
-它保持类框和完整语义，尝试自然斜线与较少折点的连接，并优化标签。原图、新路线分别测量文字边界，再实测最终结果；通常 2–3 次，实际回退最多 4 次。搜索中不调用浏览器、不导出 PNG，最终 PNG 只导出一次。路线变好却增加标签距离提示时，保留标签优化后的原路线。`--no-routes`、`--no-prefix-routing`、`--no-crossing-tradeoff` 可分别消融路由、路径前缀和交叉取舍；原有标签消融开关保留。
+它保持类框和完整语义，尝试自然斜线与较少折点的连接，并优化标签。原图、新路线分别测量文字边界，再实测最终结果；通常 2–3 次，实际回退最多 4 次。搜索中不调用浏览器、不导出 PNG，最终 PNG 只导出一次。路线的标签提示须通过旧标签流程的验收基线；新增标签优化不能撤销旧流程已接纳的绕线改善。`--no-routes`、`--no-prefix-routing`、`--no-crossing-tradeoff` 可分别消融路由、路径前缀和交叉取舍；原有标签消融开关保留。
 
-六个已有完整输入的 24 组路由实验均通过原生导出检查；租赁图折点 4→1，32 类履约图 8→2，实测标签距离提示分别 2→1、3→2。履约图仍有两处交叉。冻结算法后生成的两个人工合成输入保留全部事实；32 类输入的一个候选虽把交叉 3→1，却增加了标签距离提示，被单次命令拒绝，最终仍为三处交叉。[路由证据](docs/route-evidence.json) · [标签证据](docs/measured-label-evidence.json)。这些不是人类审美或独立大模型 skill 的盲测证明，复杂图宽度仍待改进。
+新增标签位置搜索复用已量取的真实字体边界，保留类框、连线、文字和字体，只移动有距离提示的标签。每次最多 12 个标签、每标签 96 个位置、10,000 个搜索状态；搜索不增加浏览器或 PNG 调用。`--no-font-domains` 关闭新增搜索，`--no-measured-fragments` 和 `--no-dense-prefix` 分别消融实测片段与密集前缀采样；`--no-refine` 关闭全部标签优化。
+
+阶段 4.8：8 个已知场景（7 个模型）的 32 组机制消融通过原生和几何检查；完整命令曾发现一次路线回退，修正后 5 组配对验证均不增加几何指标或标签提示。32 类模块图交叉 3→1、折点 3→2、标签提示 5→4；租赁图提示 1→0，履约图 2→1。模型事实保留，字体测量与 PNG 次数不增加。[本轮证据与边界](docs/font-domain-evidence.json) · [已有路由证据](docs/route-evidence.json)。这是已知案例与合成家族的工程结果，复杂图宽度、残余交叉与人类审美仍待改进。
+
+可直接运行的 32 类例子：
+
+```sh
+python refinement/create_uml.py examples/module-workspace.json --root workspace -o out/module-workspace
+```
+
+[SVG](docs/images/module-workspace.svg) · [可编辑 draw.io](docs/images/module-workspace.drawio)
+
+![模块工作空间：32 类，保留全部关系](docs/images/module-workspace.png)
 
 ## 验证与边界
 
