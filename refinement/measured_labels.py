@@ -24,7 +24,7 @@ def valid(svg, model):
     return not audit_svg(svg, model)['findings'] and not marker_findings(svg)
 
 
-def end_alignment(svg, model, cache):
+def end_alignment(svg, model, cache, reuse_score=True, affected_only=True, trace=None):
     """Right-align short multiplicities on the line-facing side of a block.
 
     Try only the two in-block horizontal alignments, using cached real fragment
@@ -33,6 +33,10 @@ def end_alignment(svg, model, cache):
     root = ET.fromstring(svg)
     accepted = []
     groups = 0
+    current = None
+    stats = trace if trace is not None else {}
+    stats.setdefault('review_calls', 0)
+    stats.setdefault('clear_groups_skipped', 0)
     for index, relation in enumerate(model['relations']):
         group = root.find(f'.//*[@id="edge_{index}"]')
         remaining = list(group.findall(NS+'text'))
@@ -46,8 +50,17 @@ def end_alignment(svg, model, cache):
             groups += 1
             if groups > LIMITS['max_alignment_groups']:
                 break
-            original = ET.tostring(root, encoding='utf-8', xml_declaration=True)
-            old = cache.review(original)
+            if not reuse_score or current is None:
+                original = ET.tostring(root, encoding='utf-8', xml_declaration=True)
+                current = cache.review(original)
+                stats['review_calls'] += 1
+            old = current
+            # Fixed paths and independent fragment distances mean that moving
+            # a clear end block cannot reduce the warning score. Unknown
+            # fragments/end bindings disable this shortcut conservatively.
+            if affected_only and not old['unmapped_fragments'] and all(w.get('end') in ('source','target','center') for w in old['proximity_warnings']) and not any(w['relation']==index and w['end']==side for w in old['proximity_warnings']):
+                stats['clear_groups_skipped'] += 1
+                continue
             left = min(float(t.get('x')) for t in texts)
             right = max(float(t.get('x'))+float(t.get('textLength')) for t in texts)
             coordinates = [t.get('x') for t in texts]
@@ -58,9 +71,11 @@ def end_alignment(svg, model, cache):
                 t.set('data-label-align', 'right')
             trial = ET.tostring(root, encoding='utf-8', xml_declaration=True)
             new = cache.review(trial)
+            stats['review_calls'] += 1
             if score(new) < score(old) and valid(trial, model):
                 accepted.append(dict(relation=index, end=side,
                                      before=score(old), after=score(new)))
+                current = new
             else:
                 for t, x in zip(texts, coordinates):
                     t.set('x', x)
@@ -69,15 +84,23 @@ def end_alignment(svg, model, cache):
     return ET.tostring(root, encoding='utf-8', xml_declaration=True), accepted
 
 
-def improve(model, metrics, graph, cache, align=False, refine=False):
+def improve(model, metrics, graph, cache, align=False, refine=False,
+            reuse_alignment_score=True, affected_alignment_only=True):
     g = copy.deepcopy(graph)
     trace = dict(limits=LIMITS, align=align, refine=refine, label_solves=0,
-                 alignment_events=[], refine_events=[], actual_browser_calls_inside_search=0)
+                alignment_events=[], refine_events=[], actual_browser_calls_inside_search=0,
+                 alignment_review_calls=0, clear_alignment_groups_skipped=0,
+                 reuse_alignment_score=reuse_alignment_score,
+                 affected_alignment_only=affected_alignment_only)
     def render(trial):
         svg, scene = draw(model, metrics, trial)
         svg = annotated(svg, trial)
         if align:
-            svg, alignment_events = end_alignment(svg, model, cache)
+            note = {}
+            svg, alignment_events = end_alignment(svg, model, cache,
+                reuse_score=reuse_alignment_score, affected_only=affected_alignment_only, trace=note)
+            trace['alignment_review_calls'] += note['review_calls']
+            trace['clear_alignment_groups_skipped'] += note['clear_groups_skipped']
         else:
             alignment_events = []
         return svg, scene, alignment_events

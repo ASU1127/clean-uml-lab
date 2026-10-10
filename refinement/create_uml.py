@@ -39,6 +39,8 @@ def main():
     parser.add_argument('--no-align', action='store_true')
     parser.add_argument('--no-refine', action='store_true')
     parser.add_argument('--no-cache-distances', action='store_true')
+    parser.add_argument('--no-alignment-score-reuse', action='store_true', help='Recheck unchanged alignment scores')
+    parser.add_argument('--no-affected-alignment', action='store_true', help='Try end alignment even on clear label blocks')
     parser.add_argument('--no-font-domains', action='store_true', help='Ablate measured label-position domains entirely')
     parser.add_argument('--no-measured-fragments', action='store_true', help='Use nominal label-block geometry in position domains')
     parser.add_argument('--no-dense-prefix', action='store_true', help='Use sparse endpoint-prefix positions in label domains')
@@ -57,7 +59,7 @@ def main():
         args.puppeteer_module = str(Path(args.puppeteer_module).resolve())
     if not (core/'prototype.py').is_file() or not (core/'review_svg.cjs').is_file():
         parser.error('--core-dir must be the matching Clean UML skill directory')
-    sys.path[:0] = [str(Path(__file__).resolve().parent), str(core), str(core/'runtime/scripts')]
+    sys.path[:0] = [str(Path(__file__).resolve().parent), str(core/'refinement'), str(core), str(core/'runtime/scripts')]
     from tree_layout import draw
     from drawio_export import export_drawio
     from check_exports import verify
@@ -137,7 +139,9 @@ def main():
     cache = RenderCache(original_svg, model, measured, cache_distances=not args.no_cache_distances)
     def refine_labels(value, typography):
         result_graph, result_svg, result_scene, result_trace = improve(
-            model, metrics, value, typography, align=not args.no_align, refine=not args.no_refine)
+            model, metrics, value, typography, align=not args.no_align, refine=not args.no_refine,
+            reuse_alignment_score=not args.no_alignment_score_reuse,
+            affected_alignment_only=not args.no_affected_alignment)
         result_trace['pre_font_score'] = score(typography.review(result_svg))
         if not args.no_refine and not args.no_font_domains:
             result_graph, result_svg, font_trace = improve_font_domains(
@@ -255,6 +259,10 @@ def main():
                   initial_png_exports=prior.get('png_exports'), layout_calls=prior.get('layout_calls'),
                   new_layout_calls=prior.get('layout_calls', 0) if args.model else 0,
                   label_solves=label_solves, route_label_solves=routing['label_solver_calls'],
+                  alignment_score_reuse=not args.no_alignment_score_reuse,
+                  affected_alignment_only=not args.no_affected_alignment,
+                  alignment_review_calls=sum(t.get('alignment_review_calls', 0) for t in [old_trace] + ([route_refinement] if route_refinement is not None else [])),
+                  clear_alignment_groups_skipped=sum(t.get('clear_alignment_groups_skipped', 0) for t in [old_trace] + ([route_refinement] if route_refinement is not None else [])),
                   font_domains_enabled=not args.no_refine and not args.no_font_domains,
                   measured_fragments=not args.no_measured_fragments,
                   dense_prefix=not args.no_dense_prefix,
