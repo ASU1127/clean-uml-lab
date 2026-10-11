@@ -1,0 +1,352 @@
+{
+  "stage": "4.9: exact alignment work reduction",
+  "scope": "Same complete class-diagram facts, fonts, class frames, paths and output bytes. Independent score reuse and clear-block skipping; no new layout, styling, route or human-preference claim.",
+  "independent_arms": [
+    {
+      "case": "rental",
+      "arm": "control",
+      "seconds": 0.459944,
+      "reviews": 112,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "rental",
+      "arm": "reuse",
+      "seconds": 0.321044,
+      "reviews": 60,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "rental",
+      "arm": "affected",
+      "seconds": 0.351117,
+      "reviews": 75,
+      "skipped": 37,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "rental",
+      "arm": "full",
+      "seconds": 0.21016,
+      "reviews": 23,
+      "skipped": 37,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "fulfillment",
+      "arm": "control",
+      "seconds": 4.67871,
+      "reviews": 432,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "fulfillment",
+      "arm": "reuse",
+      "seconds": 3.079659,
+      "reviews": 220,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "fulfillment",
+      "arm": "affected",
+      "seconds": 3.216734,
+      "reviews": 250,
+      "skipped": 182,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "fulfillment",
+      "arm": "full",
+      "seconds": 1.613234,
+      "reviews": 38,
+      "skipped": 182,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "modular-32",
+      "arm": "control",
+      "seconds": 7.997992,
+      "reviews": 600,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "modular-32",
+      "arm": "reuse",
+      "seconds": 5.21674,
+      "reviews": 305,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "modular-32",
+      "arm": "affected",
+      "seconds": 5.684954,
+      "reviews": 357,
+      "skipped": 243,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "modular-32",
+      "arm": "full",
+      "seconds": 3.135968,
+      "reviews": 62,
+      "skipped": 243,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "seeded-35",
+      "arm": "control",
+      "seconds": 12.206767,
+      "reviews": 896,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "seeded-35",
+      "arm": "reuse",
+      "seconds": 7.488289,
+      "reviews": 455,
+      "skipped": 0,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "seeded-35",
+      "arm": "affected",
+      "seconds": 7.905226,
+      "reviews": 519,
+      "skipped": 377,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    },
+    {
+      "case": "seeded-35",
+      "arm": "full",
+      "seconds": 3.662057,
+      "reviews": 78,
+      "skipped": 377,
+      "checks": {
+        "svg_exact": true,
+        "graph_exact": true,
+        "native_exact": true,
+        "refinement_events_exact": true
+      },
+      "passed": true
+    }
+  ],
+  "factorial": {
+    "cases": 4,
+    "arms": 16,
+    "published_controls": 4,
+    "all_exact": true,
+    "layout_calls": 0,
+    "font_measurements": 0,
+    "pngs": 0,
+    "repairs": 0,
+    "timing": "Single component calls with fresh matching typography caches; timings descriptive."
+  },
+  "first_integration": {
+    "commands": 6,
+    "all_commands_passed": false,
+    "wrapper_import_failures": 3,
+    "successful_controls": 2,
+    "retained_generation_failure": "seeded-37",
+    "layouts": 9,
+    "font_measurements": 6,
+    "pngs": 2
+  },
+  "repaired_integration": {
+    "commands": 3,
+    "prior_experiment_wrapper_repairs": 1,
+    "repairs_inside_batch": 0,
+    "all_behavior_equal": true,
+    "successful_drawings": 2,
+    "all_cases_succeeded": false,
+    "pairs": [
+      {
+        "case": "modular-32",
+        "control_exit": 0,
+        "exit": 0,
+        "successful_drawing": true,
+        "behavior_equal": true,
+        "control_seconds": 57.125405,
+        "full_seconds": 59.094578
+      },
+      {
+        "case": "seeded-31",
+        "control_exit": 0,
+        "exit": 0,
+        "successful_drawing": true,
+        "behavior_equal": true,
+        "control_seconds": 46.362716,
+        "full_seconds": 61.888179
+      },
+      {
+        "case": "seeded-37",
+        "control_exit": 2,
+        "exit": 2,
+        "successful_drawing": false,
+        "behavior_equal": true,
+        "control_seconds": 29.432739,
+        "full_seconds": 46.801974
+      }
+    ],
+    "layouts": 9,
+    "font_measurements": 6,
+    "pngs": 2,
+    "timing": "Earlier controls compared with later full commands did not show an overall speed improvement. One known model and two retained post-algorithm-freeze synthetic-family samples; after wrapper repair they are not fresh holdouts."
+  },
+  "repeated_refinement": {
+    "order": [
+      "control",
+      "full",
+      "full",
+      "control"
+    ],
+    "repeats_per_method": 2,
+    "all_exact": true,
+    "medians_seconds": {
+      "control": 30.1411655,
+      "full": 19.5217205
+    },
+    "runs": [
+      {
+        "index": 0,
+        "arm": "control",
+        "seconds": 30.595049,
+        "exact": true
+      },
+      {
+        "index": 1,
+        "arm": "full",
+        "seconds": 19.774681,
+        "exact": true
+      },
+      {
+        "index": 2,
+        "arm": "full",
+        "seconds": 19.26876,
+        "exact": true
+      },
+      {
+        "index": 3,
+        "arm": "control",
+        "seconds": 29.687282,
+        "exact": true
+      }
+    ],
+    "layouts": 0,
+    "font_measurements": 12,
+    "pngs": 4,
+    "repairs": 0,
+    "scope": "Actual refinement from the same complete 32-class generation, including all fonts and final PNG. This is not complete first-call generation latency or a multi-machine benchmark."
+  },
+  "negative_layout_trials": {
+    "single_edge_clearance_arms": 32,
+    "wrapped_terminal_arms": 8,
+    "junction_probes": 1,
+    "fonts": 0,
+    "pngs": 0,
+    "promoted": false,
+    "result": "Leaf wrapping narrowed a known 35-class drawing but increased crossings from 0 to 23. Contact experiments did not remove its remaining contact within the fixed non-regression budgets. These hypotheses are not shipped."
+  },
+  "remaining": [
+    "One retained 37-class model still fails complete generation before refinement.",
+    "Complex drawings remain wide and may retain crossings, contacts or proximity warnings.",
+    "No independent drawing-skill blind test, general competitor superiority or human-aesthetic certification.",
+    "No claimed overall first-call generation acceleration."
+  ]
+}
