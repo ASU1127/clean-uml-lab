@@ -1,12 +1,26 @@
 # Clean UML Lab
 
-从结构化事实生成简洁、可审核的 UML 类图，输出 **SVG、PNG 和可编辑 draw.io**。可作为 agent skill 或本地 CLI 使用。
+从结构化事实生成简洁、可审核的 UML 类图和用例图，输出 **SVG、PNG 和可编辑 draw.io**。可作为 agent skill 或本地 CLI 使用。
 
 本分支包含阶段 **4.4** 核心、**4.6 路由/标签优化**、**4.7 原生重连**、**4.8 字体位置搜索**和 **4.9 标签计算优化**。支持文字自动扩框、保存后的编辑重排、一次最终 PNG 导出和实图文字审核。已发布的 `v0.1.0-alpha.1` 对应阶段 4.2。
 
 ![带限定符的关联](docs/images/qualified-bank.png)
 
 ## 使用
+
+用例图阶段入口：
+
+```sh
+npm ci --prefix runtime --no-audit --no-fund
+python usecase.py examples/usecase-library.json -o out/usecase-library
+python verify_usecase.py out/usecase-library
+```
+
+用例图按参与者职责和关系安排位置，保持黑白样式，优先直线和短斜线。支持关联、include、extend 和泛化；extend 需要明确的扩展点。模型和限制见 [usecase-model.md](runtime/references/usecase-model.md)。原生文件可编辑，类图的 reflow 命令不适用于用例图。固定案例及独立消融可用 `python benchmarks/usecase_ablation.py -o new-study` 复现。
+
+![用例图阶段样例](docs/images/usecase-library.png)
+
+8 个固定合成场景的 32 组独立消融保留全部事实，完整配置 7/8 通过几何检查；门诊场景保留 1 处交叉并返回需要复查。复杂电商场景为 0 处交叉，同内容 PlantUML 自动布局为 9 处，但本工具占用面积更大；门诊场景 PlantUML 自动布局没有交叉。8 份原生文件的保存后语义检查、移动连接和文字编辑保存通过。实图字体测量未发现文字越出用例椭圆。详见 [阶段证据](docs/usecase-evidence.json)；这些结果不代表独立技能评测或人类审美认证。
 
 需要 Python 3.12+、Node.js 22+。在仓库目录执行：
 

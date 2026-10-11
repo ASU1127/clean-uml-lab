@@ -1,0 +1,110 @@
+{
+  "type": "use_case",
+  "name": "酒店预订系统",
+  "actors": [
+    {
+      "id": "guest",
+      "name": "住客",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "desk",
+      "name": "前台人员",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "bank",
+      "name": "支付平台",
+      "kind": "external",
+      "side": "right"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "checkout",
+      "name": "办理退房"
+    },
+    {
+      "id": "search",
+      "name": "查询客房"
+    },
+    {
+      "id": "verify",
+      "name": "核验住客身份"
+    },
+    {
+      "id": "book",
+      "name": "预订客房"
+    },
+    {
+      "id": "pay",
+      "name": "支付费用"
+    },
+    {
+      "id": "checkin",
+      "name": "办理入住"
+    },
+    {
+      "id": "cancel",
+      "name": "取消预订"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "guest",
+      "target": "search"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "guest",
+      "target": "book"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "guest",
+      "target": "cancel"
+    },
+    {
+      "id": "r4",
+      "kind": "association",
+      "source": "desk",
+      "target": "checkin"
+    },
+    {
+      "id": "r5",
+      "kind": "association",
+      "source": "desk",
+      "target": "checkout"
+    },
+    {
+      "id": "r6",
+      "kind": "association",
+      "source": "bank",
+      "target": "pay"
+    },
+    {
+      "id": "r7",
+      "kind": "include",
+      "source": "book",
+      "target": "pay"
+    },
+    {
+      "id": "r8",
+      "kind": "include",
+      "source": "checkin",
+      "target": "verify"
+    },
+    {
+      "id": "r9",
+      "kind": "include",
+      "source": "checkout",
+      "target": "pay"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "type": "use_case",
+  "name": "在线结算系统",
+  "actors": [
+    {
+      "id": "buyer",
+      "name": "顾客",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "bank",
+      "name": "支付平台",
+      "kind": "external",
+      "side": "right"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "order",
+      "name": "提交订单",
+      "extension_points": [
+        "优惠结算"
+      ]
+    },
+    {
+      "id": "browse",
+      "name": "浏览商品"
+    },
+    {
+      "id": "coupon",
+      "name": "使用优惠券"
+    },
+    {
+      "id": "pay",
+      "name": "完成支付"
+    },
+    {
+      "id": "refund",
+      "name": "申请退款"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "buyer",
+      "target": "browse"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "buyer",
+      "target": "order"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "buyer",
+      "target": "refund"
+    },
+    {
+      "id": "r4",
+      "kind": "association",
+      "source": "bank",
+      "target": "pay"
+    },
+    {
+      "id": "r5",
+      "kind": "association",
+      "source": "bank",
+      "target": "refund"
+    },
+    {
+      "id": "r6",
+      "kind": "include",
+      "source": "order",
+      "target": "pay"
+    },
+    {
+      "id": "r7",
+      "kind": "extend",
+      "source": "coupon",
+      "target": "order",
+      "extension_points": [
+        "优惠结算"
+      ]
+    }
+  ]
+}

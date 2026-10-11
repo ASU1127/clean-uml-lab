@@ -1,0 +1,14 @@
+{
+  "scope": "Eight fixed synthetic business models; not an independent held-out dataset",
+  "cases": [
+    "simple",
+    "checkout",
+    "hotel",
+    "library",
+    "clinic",
+    "commerce",
+    "generalization",
+    "long_names"
+  ],
+  "no_case_resampling": true
+}
