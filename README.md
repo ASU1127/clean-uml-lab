@@ -45,6 +45,8 @@ python prototype.py examples/InviDas.json -o out/invidas
 
 模型格式见 [model.md](runtime/references/model.md)。不要为布局补充或删除业务事实。
 
+当常规类图候选全部失败时，可执行一次端部空间修正：分层安排组合分支起点，并尝试调整放不下标签的普通关联。完整语义、类框和检查标准保持不变。`--no-fan-clearance`、`--no-association-clearance` 可独立关闭；`run.json` 区分内部返工和人工返工。两个开发失败案例恢复了完整输出，但新留出样本未显示稳定收益，复杂图仍有交叉，不能据此宣称领先竞品。[修正证据](docs/end-clearance-evidence.json)。
+
 ## 编辑与重排
 
 原生标题和成员文字编辑会扩展类框，限定符保持为真实连接端。更长的文字仍可能与邻近对象相撞。保存后，用匹配的原始输出模型重排：
