@@ -1,0 +1,68 @@
+{
+  "type": "use_case",
+  "name": "校园跨部门实验室预约管理平台",
+  "actors": [
+    {
+      "id": "student",
+      "name": "研究生与本科生申请者",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "manager",
+      "name": "实验室设备管理员",
+      "kind": "human",
+      "side": "right"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "availability",
+      "name": "查看可预约设备及可用时间段"
+    },
+    {
+      "id": "reserve",
+      "name": "提交跨部门实验室使用预约"
+    },
+    {
+      "id": "approve",
+      "name": "审批高风险设备使用申请"
+    },
+    {
+      "id": "identity",
+      "name": "核验申请者安全培训资格"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "student",
+      "target": "availability"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "student",
+      "target": "reserve"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "manager",
+      "target": "approve"
+    },
+    {
+      "id": "r4",
+      "kind": "include",
+      "source": "reserve",
+      "target": "identity"
+    },
+    {
+      "id": "r5",
+      "kind": "include",
+      "source": "approve",
+      "target": "identity"
+    }
+  ]
+}

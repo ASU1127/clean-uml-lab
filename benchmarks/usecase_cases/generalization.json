@@ -1,0 +1,80 @@
+{
+  "type": "use_case",
+  "name": "访客服务系统",
+  "actors": [
+    {
+      "id": "user",
+      "name": "用户",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "member",
+      "name": "会员",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "support",
+      "name": "客服人员",
+      "kind": "human",
+      "side": "right"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "query",
+      "name": "查询服务"
+    },
+    {
+      "id": "priority",
+      "name": "请求优先支持"
+    },
+    {
+      "id": "ticket",
+      "name": "提交工单"
+    },
+    {
+      "id": "handle",
+      "name": "处理工单"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "user",
+      "target": "query"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "user",
+      "target": "ticket"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "member",
+      "target": "priority"
+    },
+    {
+      "id": "r4",
+      "kind": "association",
+      "source": "support",
+      "target": "handle"
+    },
+    {
+      "id": "r5",
+      "kind": "generalization",
+      "source": "member",
+      "target": "user"
+    },
+    {
+      "id": "r6",
+      "kind": "generalization",
+      "source": "priority",
+      "target": "ticket"
+    }
+  ]
+}

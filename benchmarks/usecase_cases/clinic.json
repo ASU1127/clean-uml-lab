@@ -1,0 +1,198 @@
+{
+  "type": "use_case",
+  "name": "门诊预约与诊疗系统",
+  "actors": [
+    {
+      "id": "patient",
+      "name": "患者",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "doctor",
+      "name": "医生",
+      "kind": "human",
+      "side": "right"
+    },
+    {
+      "id": "reception",
+      "name": "挂号人员",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "bank",
+      "name": "支付平台",
+      "kind": "external",
+      "side": "right"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "record",
+      "name": "填写诊疗记录"
+    },
+    {
+      "id": "book",
+      "name": "预约门诊",
+      "extension_points": [
+        "预约冲突"
+      ]
+    },
+    {
+      "id": "verify",
+      "name": "核验就诊信息"
+    },
+    {
+      "id": "cancel",
+      "name": "取消预约"
+    },
+    {
+      "id": "schedule",
+      "name": "查看医生排班"
+    },
+    {
+      "id": "pay",
+      "name": "缴纳诊疗费用"
+    },
+    {
+      "id": "consult",
+      "name": "开展诊疗"
+    },
+    {
+      "id": "checkin",
+      "name": "登记到诊"
+    },
+    {
+      "id": "reschedule",
+      "name": "改约门诊"
+    },
+    {
+      "id": "prescribe",
+      "name": "开具处方"
+    },
+    {
+      "id": "refund",
+      "name": "办理退款"
+    },
+    {
+      "id": "history",
+      "name": "查看历史病历"
+    },
+    {
+      "id": "queue",
+      "name": "分配候诊序号"
+    },
+    {
+      "id": "followup",
+      "name": "安排复诊"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "patient",
+      "target": "schedule"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "patient",
+      "target": "book"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "patient",
+      "target": "cancel"
+    },
+    {
+      "id": "r4",
+      "kind": "association",
+      "source": "patient",
+      "target": "history"
+    },
+    {
+      "id": "r5",
+      "kind": "association",
+      "source": "reception",
+      "target": "checkin"
+    },
+    {
+      "id": "r6",
+      "kind": "association",
+      "source": "reception",
+      "target": "refund"
+    },
+    {
+      "id": "r7",
+      "kind": "association",
+      "source": "doctor",
+      "target": "consult"
+    },
+    {
+      "id": "r8",
+      "kind": "association",
+      "source": "doctor",
+      "target": "record"
+    },
+    {
+      "id": "r9",
+      "kind": "association",
+      "source": "doctor",
+      "target": "prescribe"
+    },
+    {
+      "id": "r10",
+      "kind": "association",
+      "source": "doctor",
+      "target": "followup"
+    },
+    {
+      "id": "r11",
+      "kind": "association",
+      "source": "bank",
+      "target": "pay"
+    },
+    {
+      "id": "r12",
+      "kind": "association",
+      "source": "bank",
+      "target": "refund"
+    },
+    {
+      "id": "r13",
+      "kind": "include",
+      "source": "book",
+      "target": "pay"
+    },
+    {
+      "id": "r14",
+      "kind": "include",
+      "source": "consult",
+      "target": "verify"
+    },
+    {
+      "id": "r15",
+      "kind": "include",
+      "source": "checkin",
+      "target": "verify"
+    },
+    {
+      "id": "r16",
+      "kind": "include",
+      "source": "checkin",
+      "target": "queue"
+    },
+    {
+      "id": "r17",
+      "kind": "extend",
+      "source": "reschedule",
+      "target": "book",
+      "extension_points": [
+        "预约冲突"
+      ]
+    }
+  ]
+}

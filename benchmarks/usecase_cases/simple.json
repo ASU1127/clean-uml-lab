@@ -1,0 +1,46 @@
+{
+  "type": "use_case",
+  "name": "图书检索系统",
+  "actors": [
+    {
+      "id": "reader",
+      "name": "读者",
+      "kind": "human",
+      "side": "left"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "search",
+      "name": "检索图书"
+    },
+    {
+      "id": "detail",
+      "name": "查看图书详情"
+    },
+    {
+      "id": "favorite",
+      "name": "收藏图书"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "reader",
+      "target": "search"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "reader",
+      "target": "detail"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "reader",
+      "target": "favorite"
+    }
+  ]
+}

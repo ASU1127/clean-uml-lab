@@ -1,0 +1,296 @@
+{
+  "type": "use_case",
+  "name": "多角色电商交易系统",
+  "actors": [
+    {
+      "id": "buyer",
+      "name": "顾客",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "seller",
+      "name": "商家",
+      "kind": "human",
+      "side": "left"
+    },
+    {
+      "id": "admin",
+      "name": "平台管理员",
+      "kind": "human",
+      "side": "right"
+    },
+    {
+      "id": "courier",
+      "name": "配送人员",
+      "kind": "human",
+      "side": "right"
+    },
+    {
+      "id": "bank",
+      "name": "支付平台",
+      "kind": "external",
+      "side": "right"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "moderate",
+      "name": "审核商品"
+    },
+    {
+      "id": "search",
+      "name": "搜索商品"
+    },
+    {
+      "id": "ship",
+      "name": "确认发货"
+    },
+    {
+      "id": "pay",
+      "name": "处理支付"
+    },
+    {
+      "id": "order",
+      "name": "提交订单",
+      "extension_points": [
+        "优惠结算"
+      ]
+    },
+    {
+      "id": "receipt",
+      "name": "确认收货"
+    },
+    {
+      "id": "product",
+      "name": "维护商品"
+    },
+    {
+      "id": "address",
+      "name": "核验收货地址"
+    },
+    {
+      "id": "refund",
+      "name": "申请退款",
+      "extension_points": [
+        "退款争议"
+      ]
+    },
+    {
+      "id": "delivery",
+      "name": "更新配送状态"
+    },
+    {
+      "id": "inventory",
+      "name": "检查商品库存"
+    },
+    {
+      "id": "review",
+      "name": "评价订单"
+    },
+    {
+      "id": "settle",
+      "name": "查看结算记录"
+    },
+    {
+      "id": "dispute",
+      "name": "处理退款争议"
+    },
+    {
+      "id": "account",
+      "name": "管理违规账号"
+    },
+    {
+      "id": "return",
+      "name": "处理退货"
+    },
+    {
+      "id": "coupon",
+      "name": "使用优惠券"
+    },
+    {
+      "id": "tracking",
+      "name": "查询配送进度"
+    },
+    {
+      "id": "pickup",
+      "name": "接收配送任务"
+    },
+    {
+      "id": "release",
+      "name": "发布商品"
+    },
+    {
+      "id": "payout",
+      "name": "执行资金结算"
+    },
+    {
+      "id": "statistics",
+      "name": "查看运营统计"
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "association",
+      "source": "buyer",
+      "target": "search"
+    },
+    {
+      "id": "r2",
+      "kind": "association",
+      "source": "buyer",
+      "target": "order"
+    },
+    {
+      "id": "r3",
+      "kind": "association",
+      "source": "buyer",
+      "target": "receipt"
+    },
+    {
+      "id": "r4",
+      "kind": "association",
+      "source": "buyer",
+      "target": "refund"
+    },
+    {
+      "id": "r5",
+      "kind": "association",
+      "source": "buyer",
+      "target": "review"
+    },
+    {
+      "id": "r6",
+      "kind": "association",
+      "source": "buyer",
+      "target": "tracking"
+    },
+    {
+      "id": "r7",
+      "kind": "association",
+      "source": "seller",
+      "target": "ship"
+    },
+    {
+      "id": "r8",
+      "kind": "association",
+      "source": "seller",
+      "target": "product"
+    },
+    {
+      "id": "r9",
+      "kind": "association",
+      "source": "seller",
+      "target": "settle"
+    },
+    {
+      "id": "r10",
+      "kind": "association",
+      "source": "seller",
+      "target": "return"
+    },
+    {
+      "id": "r11",
+      "kind": "association",
+      "source": "seller",
+      "target": "release"
+    },
+    {
+      "id": "r12",
+      "kind": "association",
+      "source": "admin",
+      "target": "moderate"
+    },
+    {
+      "id": "r13",
+      "kind": "association",
+      "source": "admin",
+      "target": "account"
+    },
+    {
+      "id": "r14",
+      "kind": "association",
+      "source": "admin",
+      "target": "statistics"
+    },
+    {
+      "id": "r15",
+      "kind": "association",
+      "source": "admin",
+      "target": "dispute"
+    },
+    {
+      "id": "r16",
+      "kind": "association",
+      "source": "courier",
+      "target": "pickup"
+    },
+    {
+      "id": "r17",
+      "kind": "association",
+      "source": "courier",
+      "target": "delivery"
+    },
+    {
+      "id": "r18",
+      "kind": "association",
+      "source": "bank",
+      "target": "pay"
+    },
+    {
+      "id": "r19",
+      "kind": "association",
+      "source": "bank",
+      "target": "payout"
+    },
+    {
+      "id": "r20",
+      "kind": "include",
+      "source": "order",
+      "target": "pay"
+    },
+    {
+      "id": "r21",
+      "kind": "include",
+      "source": "order",
+      "target": "address"
+    },
+    {
+      "id": "r22",
+      "kind": "include",
+      "source": "order",
+      "target": "inventory"
+    },
+    {
+      "id": "r23",
+      "kind": "include",
+      "source": "ship",
+      "target": "address"
+    },
+    {
+      "id": "r24",
+      "kind": "include",
+      "source": "settle",
+      "target": "payout"
+    },
+    {
+      "id": "r25",
+      "kind": "extend",
+      "source": "coupon",
+      "target": "order",
+      "extension_points": [
+        "优惠结算"
+      ]
+    },
+    {
+      "id": "r26",
+      "kind": "extend",
+      "source": "dispute",
+      "target": "refund",
+      "extension_points": [
+        "退款争议"
+      ]
+    }
+  ]
+}

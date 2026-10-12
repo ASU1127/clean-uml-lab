@@ -1,0 +1,1697 @@
+{
+  "stage": "5.0 use-case preview",
+  "scope": "Eight fixed synthetic cases developed with the renderer. No blind skill trial, external holdout or human preference certification.",
+  "source_sha256": "c720a9ac141fc5d7b2fb76ba4430acdae09679ea2349352670debed35ef77604",
+  "notation": "OMG UML 2.5.1 sections 18.1.3 and 18.1.4",
+  "factorial": {
+    "scope": "Eight fixed synthetic models; not a held-out or human-preference evaluation. Each arm has one placement and one text batch. Only full arms rasterize; arm timings are not a fair latency benchmark.",
+    "algorithm_sha256": "c720a9ac141fc5d7b2fb76ba4430acdae09679ea2349352670debed35ef77604",
+    "cases": [
+      {
+        "case": "simple",
+        "input_sha256": "cd4e033c8ecfb00c1b3674243827079d8e798df6aaec5e511d1e34e497468c43",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 45,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.134268,
+              "model_sha256": "cd4e033c8ecfb00c1b3674243827079d8e798df6aaec5e511d1e34e497468c43",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 470,
+              "height": 474,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 45,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.128103,
+              "model_sha256": "cd4e033c8ecfb00c1b3674243827079d8e798df6aaec5e511d1e34e497468c43",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 470,
+              "height": 474,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 45,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.137231,
+              "model_sha256": "cd4e033c8ecfb00c1b3674243827079d8e798df6aaec5e511d1e34e497468c43",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 470,
+              "height": 474,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 45,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.266497,
+              "model_sha256": "cd4e033c8ecfb00c1b3674243827079d8e798df6aaec5e511d1e34e497468c43",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 470,
+              "height": 474,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "checkout",
+        "input_sha256": "4a4cd4368516b71ad810676b9d99a46547c70d89b0cccaae4891ea1b3cd7e578",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 101,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.158478,
+              "model_sha256": "4a4cd4368516b71ad810676b9d99a46547c70d89b0cccaae4891ea1b3cd7e578",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 671,
+              "height": 785,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 101,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.166546,
+              "model_sha256": "4a4cd4368516b71ad810676b9d99a46547c70d89b0cccaae4891ea1b3cd7e578",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 671,
+              "height": 785,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 105,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.16567,
+              "model_sha256": "4a4cd4368516b71ad810676b9d99a46547c70d89b0cccaae4891ea1b3cd7e578",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 993,
+              "height": 521,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 105,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.301705,
+              "model_sha256": "4a4cd4368516b71ad810676b9d99a46547c70d89b0cccaae4891ea1b3cd7e578",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 993,
+              "height": 521,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "hotel",
+        "input_sha256": "31a27affe11eb5c70daef14c0bc0cd747df35d5cb4be5735dc05b1d55d7927da",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 129,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.187262,
+              "model_sha256": "31a27affe11eb5c70daef14c0bc0cd747df35d5cb4be5735dc05b1d55d7927da",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 1
+              },
+              "width": 678,
+              "height": 938,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 129,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.187747,
+              "model_sha256": "31a27affe11eb5c70daef14c0bc0cd747df35d5cb4be5735dc05b1d55d7927da",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 3
+              },
+              "width": 678,
+              "height": 938,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 125,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.192625,
+              "model_sha256": "31a27affe11eb5c70daef14c0bc0cd747df35d5cb4be5735dc05b1d55d7927da",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 1
+              },
+              "width": 1000,
+              "height": 706,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 125,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.320705,
+              "model_sha256": "31a27affe11eb5c70daef14c0bc0cd747df35d5cb4be5735dc05b1d55d7927da",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1000,
+              "height": 706,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "library",
+        "input_sha256": "2e8422419aad43a9939b8c6e9d9c9c0c972a2db5a96e37a6948b356bb31ec481",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 223,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.242174,
+              "model_sha256": "2e8422419aad43a9939b8c6e9d9c9c0c972a2db5a96e37a6948b356bb31ec481",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 2
+              },
+              "width": 680,
+              "height": 1445,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 223,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.233222,
+              "model_sha256": "2e8422419aad43a9939b8c6e9d9c9c0c972a2db5a96e37a6948b356bb31ec481",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 680,
+              "height": 1445,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 199,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.232422,
+              "model_sha256": "2e8422419aad43a9939b8c6e9d9c9c0c972a2db5a96e37a6948b356bb31ec481",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 4
+              },
+              "width": 1325,
+              "height": 653,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 199,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.350599,
+              "model_sha256": "2e8422419aad43a9939b8c6e9d9c9c0c972a2db5a96e37a6948b356bb31ec481",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1325,
+              "height": 653,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "clinic",
+        "input_sha256": "4b5d5bdc5454fc0d9cced570dde8c9e868aa92fc93348a2c53141acee8fb8f2e",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 347,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.373236,
+              "model_sha256": "4b5d5bdc5454fc0d9cced570dde8c9e868aa92fc93348a2c53141acee8fb8f2e",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 1
+              },
+              "width": 680,
+              "height": 1973,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 347,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.34273,
+              "model_sha256": "4b5d5bdc5454fc0d9cced570dde8c9e868aa92fc93348a2c53141acee8fb8f2e",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 680,
+              "height": 1973,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 335,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.337666,
+              "model_sha256": "4b5d5bdc5454fc0d9cced570dde8c9e868aa92fc93348a2c53141acee8fb8f2e",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 5
+              },
+              "width": 1342,
+              "height": 917,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 335,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.490855,
+              "model_sha256": "4b5d5bdc5454fc0d9cced570dde8c9e868aa92fc93348a2c53141acee8fb8f2e",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 1
+              },
+              "width": 1342,
+              "height": 917,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "commerce",
+        "input_sha256": "9bd1478f82363ebf6fe29710b988f1378a6d983c04341a5805eaa93396d2b402",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 548,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.629413,
+              "model_sha256": "9bd1478f82363ebf6fe29710b988f1378a6d983c04341a5805eaa93396d2b402",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 2
+              },
+              "width": 682,
+              "height": 3029,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 548,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.567567,
+              "model_sha256": "9bd1478f82363ebf6fe29710b988f1378a6d983c04341a5805eaa93396d2b402",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 682,
+              "height": 3029,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 560,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.599427,
+              "model_sha256": "9bd1478f82363ebf6fe29710b988f1378a6d983c04341a5805eaa93396d2b402",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 7
+              },
+              "width": 1346,
+              "height": 1577,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 560,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.748967,
+              "model_sha256": "9bd1478f82363ebf6fe29710b988f1378a6d983c04341a5805eaa93396d2b402",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1346,
+              "height": 1577,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "generalization",
+        "input_sha256": "33d224a286837b99260a1a2e390eb5c7552cd4f65537ba81a92276223aa872cf",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 84,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.133463,
+              "model_sha256": "33d224a286837b99260a1a2e390eb5c7552cd4f65537ba81a92276223aa872cf",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 1
+              },
+              "width": 678,
+              "height": 590,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 84,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.131065,
+              "model_sha256": "33d224a286837b99260a1a2e390eb5c7552cd4f65537ba81a92276223aa872cf",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 678,
+              "height": 590,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 78,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.141178,
+              "model_sha256": "33d224a286837b99260a1a2e390eb5c7552cd4f65537ba81a92276223aa872cf",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1322,
+              "height": 440,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 78,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.276676,
+              "model_sha256": "33d224a286837b99260a1a2e390eb5c7552cd4f65537ba81a92276223aa872cf",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1322,
+              "height": 440,
+              "native": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "case": "long_names",
+        "input_sha256": "86dcb89511ba1bd7f3c3e1827276c68e3127cdf0f0ab9a17c34caa2a0169a98a",
+        "runs": [
+          {
+            "arm": "neither",
+            "exit": 2,
+            "facts_equal": true,
+            "run": {
+              "status": "needs_review",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 70,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.143141,
+              "model_sha256": "86dcb89511ba1bd7f3c3e1827276c68e3127cdf0f0ab9a17c34caa2a0169a98a",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 1,
+                "label_node": 1,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 843,
+              "height": 594,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "roles",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": false,
+              "layout_calls": 1,
+              "route_trials": 70,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.159972,
+              "model_sha256": "86dcb89511ba1bd7f3c3e1827276c68e3127cdf0f0ab9a17c34caa2a0169a98a",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 843,
+              "height": 594,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "columns",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": false,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 64,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 0,
+              "repairs": 0,
+              "seconds": 0.157863,
+              "model_sha256": "86dcb89511ba1bd7f3c3e1827276c68e3127cdf0f0ab9a17c34caa2a0169a98a",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1709,
+              "height": 362,
+              "native": "passed"
+            }
+          },
+          {
+            "arm": "full",
+            "exit": 0,
+            "facts_equal": true,
+            "run": {
+              "status": "geometry_pass",
+              "human_readability": "not_certified",
+              "role_order": true,
+              "relation_columns": true,
+              "layout_calls": 1,
+              "route_trials": 64,
+              "text_measurement_calls": 1,
+              "browser_measurements": 0,
+              "pngs": 1,
+              "repairs": 0,
+              "seconds": 0.28268,
+              "model_sha256": "86dcb89511ba1bd7f3c3e1827276c68e3127cdf0f0ab9a17c34caa2a0169a98a",
+              "geometry": {
+                "invalid_path": 0,
+                "node_overlap": 0,
+                "line_node": 0,
+                "label_node": 0,
+                "label_label": 0,
+                "label_line": 0,
+                "crossings": 0
+              },
+              "width": 1709,
+              "height": 362,
+              "native": "passed"
+            }
+          }
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "case": "simple",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "95fdeed17ed5f0d351928288438274d71f3936688e5b64f42d79a2869ea8c55e",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "simple",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "72cdbf457c4b50998b9bcc94e1be7077292f34a3d04a9454158d6ebf1a999fa0",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "checkout",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "e47d05bb217bdaaba4554e36c5a15e0acb906a2ed844eb437327c9babd84eb5f",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "checkout",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "c188ce5b7cf49bba66ea04264ffcd0320721baaaf535c08b25fdcb515bbeade9",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "hotel",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "384ca18d6bbad0cfb4e0d176e12fdf15f7ced2e1ab02e79796b43952703c5829",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "hotel",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "8c6faf833462945d8d2aefb9201603d800300ee8f3134f60b1891902c5867693",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "library",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "daf38f7f43b7dc7f99564ae2e0f72fe1bd4fc3ddafedc4fa970ea6d50a997d00",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "library",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "875fdf1189f6fbf5d73791c765ba84751bb470e5c4d458875931523a2ac40677",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "clinic",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "ec2559e329d38b306e27f324f3e7d1e60f11142e8168a0773c7d2b8088506744",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "clinic",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "9062a6ad60651675e2a911dbfa4e2279ed2b0c3e507e4984d940b9bbadbf1ff5",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "commerce",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "b03969d183187ceb8ac97251e7a77fe24808540f4494c65aa7bd90256d915602",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "commerce",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "bcb9188b9f1b17aafe5f46637dff263ab42bf79cfd082259d8163834cd55f3c7",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "generalization",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "e66eb3e118fd6535e3f02ab0a8d54eed83f27047440a3017f685db1c8f9864cc",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "generalization",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "24fc6e2f4f8ce201d88db5243823fd595eaa2bc9369c336d9ba74c4d3191ce80",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "long_names",
+        "engine": "plantuml",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "c41b0546984562099e258fc82f4206f281539fe88c143b3d177b144c51274268",
+        "layout_hints": false,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      },
+      {
+        "case": "long_names",
+        "engine": "plantuml-hints",
+        "exit": 0,
+        "svg_exists": true,
+        "source_sha256": "90a27fd21880f0e5a147383b94b09c2faffdf855d6251073682a6cc10b99e90b",
+        "layout_hints": true,
+        "hidden_edges": 0,
+        "manual_positions": 0
+      }
+    ],
+    "summary": {
+      "arms": 32,
+      "all_facts_equal": true,
+      "full_geometry_pass": 7,
+      "layout_calls": 32,
+      "text_batches": 32,
+      "pngs": 8,
+      "repairs": 0
+    }
+  },
+  "actual_fonts": {
+    "browser_measurements": 24,
+    "all_usecase_text_equal": true,
+    "outside_ellipse": 0,
+    "scope": "One offline DOM font/path extraction per final SVG. Does not certify pixel ink, domain requirements or human preference."
+  },
+  "native_api": {
+    "scope": "Local draw.io vendor Graph/mxCodec API and native SVG export; not desktop GUI, use-case reflow or arbitrary text auto-fit.",
+    "rows": [
+      {
+        "case": "simple",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "checkout",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0.3671054746671416,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "hotel",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0.44645806492604834,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "library",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0.2563414721900017,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "clinic",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0.3823603989036428,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "commerce",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0.5,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "generalization",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      },
+      {
+        "case": "long_names",
+        "version": "30.0.4",
+        "save_reload_equal": true,
+        "max_terminal_waypoint_error": 0,
+        "max_label_rect_error": 0.30445922873866493,
+        "move_attachment_pass": true,
+        "text_edit_saved": true
+      }
+    ]
+  },
+  "saved_complete_semantics": {
+    "passed": 8,
+    "embedded_model_storage": "Persistent subject mxCell; includes extension locations",
+    "scope": "Saved original models checked against complete matching companion, visible node text, connectors and markers; renamed text does not synchronize JSON."
+  },
+  "svg_comparison": [
+    {
+      "case": "checkout",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 993,
+      "height": 521
+    },
+    {
+      "case": "checkout",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 2,
+        "crossings": 0
+      },
+      "width": 721,
+      "height": 283
+    },
+    {
+      "case": "checkout",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 2,
+        "crossings": 0
+      },
+      "width": 819,
+      "height": 289
+    },
+    {
+      "case": "clinic",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 1
+      },
+      "width": 1342,
+      "height": 917
+    },
+    {
+      "case": "clinic",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 5,
+        "crossings": 0
+      },
+      "width": 775,
+      "height": 774
+    },
+    {
+      "case": "clinic",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 5,
+        "crossings": 4
+      },
+      "width": 895,
+      "height": 800
+    },
+    {
+      "case": "commerce",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 1346,
+      "height": 1577
+    },
+    {
+      "case": "commerce",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 7,
+        "crossings": 9
+      },
+      "width": 787,
+      "height": 1308
+    },
+    {
+      "case": "commerce",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 9,
+        "crossings": 24
+      },
+      "width": 873,
+      "height": 1428
+    },
+    {
+      "case": "generalization",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 1322,
+      "height": 440
+    },
+    {
+      "case": "generalization",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 472,
+      "height": 300
+    },
+    {
+      "case": "generalization",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 451,
+      "height": 361
+    },
+    {
+      "case": "hotel",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 1000,
+      "height": 706
+    },
+    {
+      "case": "hotel",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 3,
+        "crossings": 1
+      },
+      "width": 459,
+      "height": 464
+    },
+    {
+      "case": "hotel",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 3,
+        "crossings": 0
+      },
+      "width": 579,
+      "height": 369
+    },
+    {
+      "case": "library",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 1325,
+      "height": 653
+    },
+    {
+      "case": "library",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 4,
+        "crossings": 1
+      },
+      "width": 787,
+      "height": 611
+    },
+    {
+      "case": "library",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 4,
+        "crossings": 4
+      },
+      "width": 753,
+      "height": 634
+    },
+    {
+      "case": "long_names",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 1709,
+      "height": 362
+    },
+    {
+      "case": "long_names",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 2,
+        "crossings": 0
+      },
+      "width": 700,
+      "height": 265
+    },
+    {
+      "case": "long_names",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 2,
+        "crossings": 0
+      },
+      "width": 700,
+      "height": 355
+    },
+    {
+      "case": "simple",
+      "engine": "full",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 470,
+      "height": 474
+    },
+    {
+      "case": "simple",
+      "engine": "plantuml",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 230,
+      "height": 237
+    },
+    {
+      "case": "simple",
+      "engine": "plantuml-hints",
+      "geometry": {
+        "invalid_path": 0,
+        "node_overlap": 0,
+        "line_node": 0,
+        "label_node": 0,
+        "label_label": 0,
+        "label_line": 0,
+        "crossings": 0
+      },
+      "width": 230,
+      "height": 237
+    }
+  ],
+  "controls": {
+    "PlantUML": "1.2026.6",
+    "Graphviz": "2.44.1",
+    "variants": [
+      "default left-to-right",
+      "left/right actor hints correctly rotated; external actors use classifier rectangles"
+    ],
+    "fonts": "Declared Arial 16. PlantUML textLength and shape sizing differ from Sharp/Pango; canvas areas and font/path heuristics are reported, not normalized human readability.",
+    "manual_positions": 0,
+    "hidden_edges": 0
+  },
+  "development_failures_retained": [
+    "Initial zero-vector external-actor route collapsed; fixed before factorial.",
+    "Initial native text style was left-aligned or wrapped into foreignObject; fixed and viewed again.",
+    "Native save discarded mxGraphModel metadata; moved model to persistent subject cell and rechecked all eight saved files.",
+    "Initial competitor direction hints were rotated incorrectly; invalid hinted controls retained separately and replaced with verified direction mappings."
+  ],
+  "limitations": [
+    "One crossing remains in the clinic full layout, although the role-only ablation removes it at the cost of a tall canvas.",
+    "Only four relationship kinds and one subject; unsupported facts reject with original input retained.",
+    "Dense graphs, diagram area and native edit fitting still need improvement.",
+    "Class reflow does not import use cases.",
+    "No overall superiority, independent requirements coverage or aesthetic claim."
+  ]
+}
