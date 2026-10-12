@@ -1,5 +1,5 @@
 """Local UML class-diagram generation with audited global-layout proposals."""
-import argparse,copy,hashlib,json,os,shutil,subprocess,sys,time
+import argparse,copy,hashlib,json,math,os,shutil,subprocess,sys,time
 from pathlib import Path
 HOME=Path(__file__).resolve().parent
 RUNTIME=HOME/'runtime' if (HOME/'runtime').exists() else HOME.parent/'clean-uml-next'
@@ -109,6 +109,51 @@ def run(args):
             save(folder/'failure.json',dict(error=str(error)));rows.append(dict(candidate=arm,valid=False,status='failed',error=str(error)))
         if arm==arms[-1] and 'qualifier-clearance' not in arms and not getattr(args,'no_qualifier_clearance',False) and not any(r['valid'] for r in rows) and any(side+'_qualifier' in r for r in model['relations'] for side in ('source','target')):
             arms.append('qualifier-clearance')
+    fan_enabled=not getattr(args,'no_fan_clearance',False)
+    association_enabled=not getattr(args,'no_association_clearance',False)
+    fan_repair=dict(enabled=fan_enabled or association_enabled,fan_enabled=fan_enabled,
+                    association_enabled=association_enabled,triggered=False,
+                    geometry_calls=0,label_solves=0,solver_limit=10000,manual_repairs=0)
+    if fan_repair['enabled'] and not any(row['valid'] for row in rows):
+        folder=out/'fan-clearance';folder.mkdir();fan_repair['triggered']=True
+        try:
+            from fan_clearance import stage
+            sys.path.insert(0,str(HOME/'refinement'))
+            from path_labels import solve as prefix_solve
+            original=json.loads((baseline/'final-layout.json').read_text(encoding='utf-8-sig'))
+            owner={n['id']:n['id'] for n in original['children']}
+            for n in original['children']:owner.update({p['id']:n['id'] for p in n.get('ports',[])})
+            for e in original['edges']:e['sources']=[owner[e['sources'][0]]];e['targets']=[owner[e['targets'][0]]]
+            t,changes=stage(original,model) if fan_enabled else (copy.deepcopy(original),[])
+            fan_repair.update(geometry_calls=int(fan_enabled),changed_routes=changes)
+            if not changes and not association_enabled:raise ValueError('No eligible fan geometry to repair')
+            trace={};fan_repair['label_solves']=1
+            solved=prefix_solve(t,model=model,traverse=True,preserve_edges={e['id'] for e in t['edges']} - set(changes),limit=10000,trace=trace)
+            fan_repair['solver']=trace
+            if not solved and association_enabled:
+                from association_clearance import repair
+                t,association_trace=repair(t,model,metrics,trace,changed=changes)
+                fan_repair['association']=association_trace
+                fan_repair['label_solves']+=association_trace['label_solves']
+                solved=association_trace['accepted']
+            if not solved:
+                save(folder/'failed-layout.json',t);raise ValueError('Fan end labels remain infeasible')
+            svg,scene=draw(model,metrics,t);audit=audit_svg(svg,model);markers=findings(svg);rm=measure(scene)
+            hierarchy=all(scene['nodes'][r['target']]['y']+scene['nodes'][r['target']]['height']<scene['nodes'][r['source']]['y'] for r in model['relations'] if r['kind'] in ('generalization','realization'))
+            longest_before=max((sum(math.dist(a,b) for a,b in zip(e['points'],e['points'][1:])) for e in baseline_scene['edges']),default=0)
+            longest_after=max((sum(math.dist(a,b) for a,b in zip(e['points'],e['points'][1:])) for e in scene['edges']),default=0)
+            protected=all(rm[k]<=baseline_metrics[k]+1e-6 for k in ('proper_crossings','other_contacts','shared_track_length','bends','route_length','area')) and longest_after<=longest_before+1e-6
+            fan_repair.update(longest_route_before=longest_before,longest_route_after=longest_after)
+            valid=hierarchy and protected and not audit['findings'] and not markers
+            (folder/'diagram.svg').write_bytes(svg);(folder/'diagram.drawio').write_bytes(export_drawio(model,scene,svg))
+            from check_exports import verify
+            verify(folder/'diagram.drawio',model)
+            save(folder/'final-layout.json',t);save(folder/'route-metrics.json',rm)
+            save(folder/'audit.json',dict(geometry=audit,markers=markers,labels_solved=True,hierarchy=hierarchy,protected_geometry=protected))
+            rows.append(dict(candidate='fan-clearance',metrics=rm,valid=valid,status='audited'))
+        except (ValueError,AssertionError,KeyError,ZeroDivisionError) as error:
+            save(folder/'failure.json',dict(error=str(error)));rows.append(dict(candidate='fan-clearance',valid=False,status='failed',error=str(error)))
+    save(out/'fan-clearance.json',fan_repair)
     # Valid notation is required before geometry can rank usable candidates.
     # Preserve conservative dominance when the baseline itself passes its gates.
     keys=('proper_crossings','other_contacts','shared_track_length','bends','route_length','area')
@@ -128,6 +173,12 @@ def run(args):
             if folder==selected:shutil.copyfile(out/'diagram.png',folder/'diagram.png')
             else:node('rasterize.cjs',sharp,folder/'diagram.svg',folder/'diagram.png');png_exports+=1
     save(out/'run.json',dict(stage='4.4 phase product: one selected raster and optional rendered text review',png_exports=png_exports,candidate_previews=getattr(args,'candidate_previews',False),candidate_pngs_inside_search=0,selected=winner['candidate'],selected_valid=winner['valid'],root=args.root,research_regions=getattr(args,'research_regions',False),research_intrinsic=getattr(args,'research_intrinsic',False),independent_enums=independent_enums,balance=dict(candidate_enabled=balanced,component_packing=balanced and not getattr(args,'no_component_packing',False),source_centering=balanced and not getattr(args,'no_source_centering',False)),candidates=rows,layout_calls=br['layout_calls']+extra_layout_calls,seconds=time.perf_counter()-start,semantic_regions=ir['diagnostics'],scope='Baseline plus compact and spread routing; balanced packing/centering candidate only when declared enums are disconnected. A measured qualifier-clearance candidate is added only if all preceding candidates fail. Complete label-feasible non-loop routing. Width and region hypotheses are opt-in research. Global permutation search is not implemented.',selection=dict(baseline_valid=baseline_valid,policy='Strict geometry dominance over a valid baseline; otherwise choose the best passing candidate',geometry_delta_from_baseline={k:round(winner.get('metrics',baseline_metrics)[k]-baseline_metrics[k],2) for k in keys}),fallback='Invalid baseline is diagnostic only when a valid candidate exists; report failure if every candidate fails',human_readability='not_certified'))
+    record=json.loads((out/'run.json').read_text(encoding='utf-8'))
+    record['fan_clearance']=fan_repair
+    record['internal_geometry_repairs']=int(fan_repair['triggered'])
+    record['manual_repairs']=0
+    record['first_pass_without_internal_repair']=bool(winner['valid']) and not fan_repair['triggered']
+    save(out/'run.json',record)
     import html
     cards=''.join(f'<section><h2>{r["candidate"]} · {r["status"]} · valid={r["valid"]}</h2><a href="{r["candidate"]}/diagram.drawio">draw.io</a><img src="{r["candidate"]}/diagram.svg" loading="lazy"></section>' if (out/r['candidate']/'diagram.svg').exists() else f'<section><h2>{r["candidate"]} · failed</h2><p>{html.escape(r.get("error",""))}</p><a href="{r["candidate"]}/failure.json">失败诊断</a></section>' for r in rows)
     image_file='diagram.png' if png_exports else 'diagram.svg'
@@ -137,4 +188,4 @@ def run(args):
     return winner['valid']
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('model');p.add_argument('-o','--output',required=True);p.add_argument('--root');p.add_argument('--requirements');p.add_argument('--vector-only',action='store_true',help='Keep audited SVG/draw.io without PNG for optional measured refinement');p.add_argument('--candidate-previews',action='store_true',help='Render candidate PNGs only after selection for optional inspection/ablation');p.add_argument('--research-regions',action='store_true');p.add_argument('--research-intrinsic',action='store_true');p.add_argument('--no-balanced',action='store_true');p.add_argument('--no-component-packing',action='store_true');p.add_argument('--no-source-centering',action='store_true');p.add_argument('--no-qualifier-clearance',action='store_true',help='Ablate the measured qualifier-spacing fallback');p.add_argument('--no-marker-cache',action='store_true',help='Ablate exact label-only renderer reuse');p.add_argument('--no-path-cache',action='store_true',help='Ablate bounded exact SVG path sampling cache');p.add_argument('--node',default='node');p.add_argument('--sharp-module');p.add_argument('--elk-module');p.add_argument('--fontconfig');sys.exit(0 if run(p.parse_args()) else 2)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('model');p.add_argument('-o','--output',required=True);p.add_argument('--root');p.add_argument('--requirements');p.add_argument('--vector-only',action='store_true',help='Keep audited SVG/draw.io without PNG for optional measured refinement');p.add_argument('--candidate-previews',action='store_true',help='Render candidate PNGs only after selection for optional inspection/ablation');p.add_argument('--research-regions',action='store_true');p.add_argument('--research-intrinsic',action='store_true');p.add_argument('--no-balanced',action='store_true');p.add_argument('--no-component-packing',action='store_true');p.add_argument('--no-source-centering',action='store_true');p.add_argument('--no-association-clearance',action='store_true',help='Disable the bounded failed-association rescue');p.add_argument('--no-fan-clearance',action='store_true',help='Disable the one bounded fan end-label repair');p.add_argument('--no-qualifier-clearance',action='store_true',help='Ablate the measured qualifier-spacing fallback');p.add_argument('--no-marker-cache',action='store_true',help='Ablate exact label-only renderer reuse');p.add_argument('--no-path-cache',action='store_true',help='Ablate bounded exact SVG path sampling cache');p.add_argument('--node',default='node');p.add_argument('--sharp-module');p.add_argument('--elk-module');p.add_argument('--fontconfig');sys.exit(0 if run(p.parse_args()) else 2)

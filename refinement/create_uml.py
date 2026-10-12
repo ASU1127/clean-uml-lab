@@ -41,6 +41,8 @@ def main():
     parser.add_argument('--no-cache-distances', action='store_true')
     parser.add_argument('--no-alignment-score-reuse', action='store_true', help='Recheck unchanged alignment scores')
     parser.add_argument('--no-affected-alignment', action='store_true', help='Try end alignment even on clear label blocks')
+    parser.add_argument('--no-fan-clearance', action='store_true', help='Disable the one bounded generation geometry repair')
+    parser.add_argument('--no-association-clearance', action='store_true', help='Disable the bounded failed-association rescue')
     parser.add_argument('--no-font-domains', action='store_true', help='Ablate measured label-position domains entirely')
     parser.add_argument('--no-measured-fragments', action='store_true', help='Use nominal label-block geometry in position domains')
     parser.add_argument('--no-dense-prefix', action='store_true', help='Use sparse endpoint-prefix positions in label domains')
@@ -84,13 +86,20 @@ def main():
         setup = argparse.Namespace(model=args.model, output=str(generated), root=args.root,
                                    requirements=args.requirements, node=args.node,
                                    sharp_module=args.sharp_module, elk_module=args.elk_module,
-                                   fontconfig=args.fontconfig, vector_only=True)
+                                   fontconfig=args.fontconfig, vector_only=True,no_fan_clearance=args.no_fan_clearance,
+                                   no_association_clearance=args.no_association_clearance)
         if not run(setup):
-            save(out/'run.json', dict(status='generation_failed', repairs=0, png_exports=0))
+            failed=json.loads((generated/'run.json').read_text(encoding='utf-8-sig'))
+            internal=failed.get('internal_geometry_repairs',0)
+            save(out/'run.json', dict(status='generation_failed', repairs=internal,
+                internal_generation_repairs=internal,manual_repairs=0,
+                first_pass_without_internal_repair=False,layout_calls=failed.get('layout_calls',0),
+                browser_measurements=0,png_exports=0))
             return 2
     else:
         generated = Path(args.generation_dir).resolve()
     prior = json.loads((generated/'run.json').read_text(encoding='utf-8-sig'))
+    internal_generation_repairs=prior.get('internal_geometry_repairs',0)
     if not prior.get('selected_valid'):
         raise ValueError('The input generation must have passed its complete automatic checks')
     selected = (generated/prior['selected']).resolve()
@@ -274,7 +283,9 @@ def main():
                   original_crossings=route_metrics(original_scene)['proper_crossings'],
                   final_crossings=geometry['proper_crossings'],
                   original_bends=route_metrics(original_scene)['bends'], final_bends=geometry['bends'],
-                  cache_stats=cache.stats, repairs=0,
+                  cache_stats=cache.stats, repairs=internal_generation_repairs,
+                  internal_generation_repairs=internal_generation_repairs,manual_repairs=0,
+                  first_pass_without_internal_repair=not bool(internal_generation_repairs),
                   seconds=time.perf_counter()-started,
                   source_unchanged=all(digest(Path(p)) == h for p, h in sources.items()),
                   human_readability='not_certified',

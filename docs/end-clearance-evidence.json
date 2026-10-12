@@ -1,0 +1,473 @@
+{
+  "scope": "Partial resilience improvement. Complete goal not achieved; no independent skill/human preference or general competitive-superiority claim.",
+  "mechanisms": {
+    "fan_staging": "One composition/aggregation geometry pass",
+    "association_rescue": "One failed unqualified association/dependency; at most 192 geometry options and 12 complete 10000-state label solves",
+    "gate": "Original class frames and facts fixed; strict full-label/marker/hierarchy/native checks and final seven-dimension geometry protection"
+  },
+  "factorial": [
+    {
+      "case": "old-37",
+      "arm": "neither",
+      "valid": false,
+      "crossings": 6,
+      "bends": 39,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "old-37",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 6,
+      "bends": 39,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "old-37",
+      "arm": "association",
+      "valid": false,
+      "crossings": 6,
+      "bends": 39,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "old-37",
+      "arm": "full",
+      "valid": true,
+      "crossings": 6,
+      "bends": 39,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "development-37",
+      "arm": "neither",
+      "valid": false,
+      "crossings": 5,
+      "bends": 41,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "development-37",
+      "arm": "fan",
+      "valid": false,
+      "crossings": 5,
+      "bends": 41,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "development-37",
+      "arm": "association",
+      "valid": false,
+      "crossings": 5,
+      "bends": 41,
+      "association_trials": 12,
+      "native": "passed"
+    },
+    {
+      "case": "development-37",
+      "arm": "full",
+      "valid": true,
+      "crossings": 5,
+      "bends": 41,
+      "association_trials": 4,
+      "native": "passed"
+    },
+    {
+      "case": "modular-32",
+      "arm": "neither",
+      "valid": false,
+      "crossings": 2,
+      "bends": 30,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "modular-32",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 2,
+      "bends": 30,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "modular-32",
+      "arm": "association",
+      "valid": false,
+      "crossings": 2,
+      "bends": 30,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "modular-32",
+      "arm": "full",
+      "valid": true,
+      "crossings": 2,
+      "bends": 30,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "seeded-31",
+      "arm": "neither",
+      "valid": true,
+      "crossings": 2,
+      "bends": 41,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "seeded-31",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 2,
+      "bends": 41,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "seeded-31",
+      "arm": "association",
+      "valid": true,
+      "crossings": 2,
+      "bends": 41,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "seeded-31",
+      "arm": "full",
+      "valid": true,
+      "crossings": 2,
+      "bends": 41,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "rental",
+      "arm": "neither",
+      "valid": true,
+      "crossings": 0,
+      "bends": 4,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "rental",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 0,
+      "bends": 4,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "rental",
+      "arm": "association",
+      "valid": true,
+      "crossings": 0,
+      "bends": 4,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "rental",
+      "arm": "full",
+      "valid": true,
+      "crossings": 0,
+      "bends": 4,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "fulfillment",
+      "arm": "neither",
+      "valid": true,
+      "crossings": 2,
+      "bends": 8,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "fulfillment",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 2,
+      "bends": 8,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "fulfillment",
+      "arm": "association",
+      "valid": true,
+      "crossings": 2,
+      "bends": 8,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "fulfillment",
+      "arm": "full",
+      "valid": true,
+      "crossings": 2,
+      "bends": 8,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "team",
+      "arm": "neither",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "team",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "team",
+      "arm": "association",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "team",
+      "arm": "full",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "qualified",
+      "arm": "neither",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "qualified",
+      "arm": "fan",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "qualified",
+      "arm": "association",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    },
+    {
+      "case": "qualified",
+      "arm": "full",
+      "valid": true,
+      "crossings": 0,
+      "bends": 0,
+      "association_trials": 0,
+      "native": "passed"
+    }
+  ],
+  "known_actual_single_command": {
+    "status": "needs_review",
+    "layout_calls": 3,
+    "browser_measurements": 3,
+    "png_exports": 1,
+    "original_crossings": 5,
+    "final_crossings": 5,
+    "original_bends": 41,
+    "final_bends": 11,
+    "final_proximity_warnings": 0,
+    "internal_generation_repairs": 1,
+    "manual_repairs": 0,
+    "first_pass_without_internal_repair": false,
+    "cache_projection_error_px": 0.0003671236900117947
+  },
+  "heldout_new_family_samples": {
+    "scope": "Four new seeds sampled after code freeze; existing synthetic family, not independently authored requirements; every seed retained, no tuning in batch",
+    "seeds": [
+      {
+        "case": "fresh-22",
+        "seed": 3912061656
+      },
+      {
+        "case": "fresh-32",
+        "seed": 4144692155
+      },
+      {
+        "case": "fresh-37",
+        "seed": 677254164
+      },
+      {
+        "case": "fresh-39",
+        "seed": 1028199929
+      }
+    ],
+    "pairs": [
+      {
+        "case": "fresh-22",
+        "control_exit": 0,
+        "full_exit": 0,
+        "passing_artifact_equality": {
+          "diagram.svg": true,
+          "diagram.drawio": true,
+          "diagram.png": true
+        }
+      },
+      {
+        "case": "fresh-32",
+        "control_exit": 0,
+        "full_exit": 0,
+        "passing_artifact_equality": {
+          "diagram.svg": true,
+          "diagram.drawio": true,
+          "diagram.png": true
+        }
+      },
+      {
+        "case": "fresh-37",
+        "control_exit": 0,
+        "full_exit": 0,
+        "passing_artifact_equality": {
+          "diagram.svg": true,
+          "diagram.drawio": true,
+          "diagram.png": true
+        }
+      },
+      {
+        "case": "fresh-39",
+        "control_exit": 0,
+        "full_exit": 0,
+        "passing_artifact_equality": {
+          "diagram.svg": true,
+          "diagram.drawio": true,
+          "diagram.png": true
+        }
+      }
+    ],
+    "code_unchanged": true,
+    "commands": 8,
+    "layouts": 24,
+    "fonts": 24,
+    "pngs": 8,
+    "result": "All four pairs generate but need review and are byte-identical; no held-out advantage observed."
+  },
+  "actual_controls": [
+    {
+      "case": "old-37",
+      "engine": "plantuml",
+      "crossings": 5,
+      "route_length": 13503.875806300863,
+      "longest_route": 1608.8304768118512,
+      "width": 3913,
+      "height": 683,
+      "label_bounds_conflicts": 23
+    },
+    {
+      "case": "old-37",
+      "engine": "mermaid",
+      "crossings": 2,
+      "route_length": 24234.243983131353,
+      "longest_route": 2322.565589220886,
+      "width": 4485.38427734375,
+      "height": 1491,
+      "label_bounds_conflicts": 0
+    },
+    {
+      "case": "old-37",
+      "engine": "clean",
+      "crossings": 6,
+      "route_length": 15403.337186595296,
+      "longest_route": 1636.3315371144643,
+      "width": 4304.5,
+      "height": 1176,
+      "label_bounds_conflicts": 0
+    },
+    {
+      "case": "development-37",
+      "engine": "plantuml",
+      "crossings": 0,
+      "route_length": 12881.252240258958,
+      "longest_route": 2344.266307918614,
+      "width": 3937,
+      "height": 683,
+      "label_bounds_conflicts": 19
+    },
+    {
+      "case": "development-37",
+      "engine": "mermaid",
+      "crossings": 0,
+      "route_length": 23784.5323051989,
+      "longest_route": 2346.3115718039776,
+      "width": 4410.8125,
+      "height": 1491,
+      "label_bounds_conflicts": 0
+    },
+    {
+      "case": "development-37",
+      "engine": "clean",
+      "crossings": 5,
+      "route_length": 16844.305629534447,
+      "longest_route": 2921.2177163795113,
+      "width": 4178.16650390625,
+      "height": 1158,
+      "label_bounds_conflicts": 0
+    }
+  ],
+  "control_limitations": "Developed cases with fixed parent-first PlantUML polyline 1.2026.6 and Mermaid 12.1.0 ELK. Mermaid has fewer crossings; route lengths and canvas areas differ. SVG fonts measured in an offline browser. Initial Sharp Mermaid PNGs omitted HTML text; corrected via offline PDF export at 96 DPI, original SVG geometry unchanged.",
+  "native_api": {
+    "version": "30.0.4",
+    "rows": [
+      {
+        "case": "old-37",
+        "save_reload_equal": true,
+        "attachment_moved": true,
+        "role_edit_saved": true
+      },
+      {
+        "case": "development-37",
+        "save_reload_equal": true,
+        "attachment_moved": true,
+        "role_edit_saved": true
+      }
+    ],
+    "scope": "Vendor Graph/mxCodec API save/reload, class movement and ordinary label edit; not desktop GUI or new-model import certification."
+  },
+  "development_failures_retained": [
+    "First integration tried a nonexistent longest_route metric; corrected by measuring actual scene paths, reran full command.",
+    "The earlier held-out 37-class failure became a development case before the next freeze; not presented as unseen after repair.",
+    "Direct fan and forest/wrapping pilots were rejected on complete-label/geometry checks."
+  ],
+  "remaining_work": [
+    "Complex crossing reduction and width",
+    "Independent authored holdouts and blind skill comparisons",
+    "Actual user comprehension and whole native GUI edit behavior"
+  ]
+}
